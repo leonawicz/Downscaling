@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/spacelab.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Downscaling</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="climatologies" class="dropdown-toggle" data-toggle="dropdown">Climatologies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="climatologies.R">climatologies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="climPrep.R">climPrep.R</a></li>
+              <li><a href="climCalc.R">climCalc.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">CRU 2.0</li>
+              <li><a href="cru20prelimExtraction">cru20prelimExtraction</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="anomalies" class="dropdown-toggle" data-toggle="dropdown">Anomalies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="anomalies.R">anomalies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="anomPrep.R">anomPrep.R</a></li>
+              <li><a href="anomCalc.R">anomCalc.R</a></li>
+              <li><a href="anomCalcAsScript.R">anomCalcAsScript.R</a></li>
+              <li><a href="anomParSubFunc.R">anomParSubFunc.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="downscaling" class="dropdown-toggle" data-toggle="dropdown">Downscaling <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">10-minute CRU 2.0</li>
+              <li><a href="ds_world10min.R">ds_world10min.R</a></li>
+            </ul>
+
+          <li><a href="http://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Downscaling">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="cru20prelimextraction.r" class="section level2">
+<h2>cru20prelimExtraction.R</h2>
+<p><code>cru20prelimExtraction.R</code> loads CRU 2.0 10-minute resolution climatology data, rasterizes it, applies minor adjustments which fascilitate robust downscaling, and saves output files as geotiffs.</p>
+<div id="r-code" class="section level3">
+<h3>R code</h3>
+<div id="setup" class="section level4">
+<h4>Setup</h4>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> &quot;/Data/Base_Data/Climate/World/CRU_grids/CRU_TS20&quot;</span>
+path.out &lt;-<span class="st"> &quot;/Data/Base_Data/Climate/World/Climatologies/1961_1990/CRU_CL20_climatologies_historical_1961_1990&quot;</span>
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(akima)
+<span class="kw">library</span>(parallel)
+
+<span class="co"># Load and rasterize data</span>
+d &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">list.files</span>(path, <span class="dt">pattern =</span> <span class="st">&quot;tmp.dat$&quot;</span>, <span class="dt">full =</span> T))
+for (i in <span class="dv">1</span>:<span class="dv">12</span>) {
+    r &lt;-<span class="st"> </span><span class="kw">rasterFromXYZ</span>(d[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, i +<span class="st"> </span><span class="dv">2</span>)], <span class="dt">res =</span> <span class="kw">rep</span>(<span class="dv">1</span>/<span class="dv">6</span>, <span class="dv">2</span>), <span class="dt">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>, 
+        <span class="dt">digits =</span> <span class="dv">0</span>)
+    if (i ==<span class="st"> </span><span class="dv">1</span>) 
+        s.t &lt;-<span class="st"> </span>r else s.t &lt;-<span class="st"> </span><span class="kw">stack</span>(s.t, r)
+    <span class="kw">print</span>(i)
+}
+<span class="kw">names</span>(s.t) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;tas_CRU_TS20_historical_climatology_&quot;</span>, <span class="kw">c</span>(<span class="kw">paste</span>(<span class="dv">0</span>, <span class="dv">1</span>:<span class="dv">9</span>, 
+    <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dv">10</span>:<span class="dv">12</span>))
+
+d &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">list.files</span>(path, <span class="dt">pattern =</span> <span class="st">&quot;pre.dat$&quot;</span>, <span class="dt">full =</span> T))
+for (i in <span class="dv">1</span>:<span class="dv">12</span>) {
+    r &lt;-<span class="st"> </span><span class="kw">rasterFromXYZ</span>(d[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, i +<span class="st"> </span><span class="dv">2</span>)], <span class="dt">res =</span> <span class="kw">rep</span>(<span class="dv">1</span>/<span class="dv">6</span>, <span class="dv">2</span>), <span class="dt">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>, 
+        <span class="dt">digits =</span> <span class="dv">0</span>)
+    if (i ==<span class="st"> </span><span class="dv">1</span>) 
+        s.p &lt;-<span class="st"> </span>r else s.p &lt;-<span class="st"> </span><span class="kw">stack</span>(s.p, r)
+    <span class="kw">print</span>(i)
+}
+<span class="kw">names</span>(s.p) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;pr_CRU_TS20_historical_climatology_&quot;</span>, <span class="kw">c</span>(<span class="kw">paste</span>(<span class="dv">0</span>, <span class="dv">1</span>:<span class="dv">9</span>, 
+    <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dv">10</span>:<span class="dv">12</span>))
+
+<span class="co"># Set variable: tas or pr</span>
+var &lt;-<span class="st"> &quot;tas&quot;</span>
+if (var ==<span class="st"> &quot;pr&quot;</span>) s &lt;-<span class="st"> </span>s.p else if (var ==<span class="st"> &quot;tas&quot;</span>) s &lt;-<span class="st"> </span>s.t
+setNAs &lt;-<span class="st"> </span><span class="fl">0.5</span>
+interpNAs &lt;-<span class="st"> </span>T
+true.na &lt;-<span class="st"> </span><span class="kw">Which</span>(<span class="kw">is.na</span>(r), <span class="dt">cells =</span> T)
+pq &lt;-<span class="st"> </span>tq &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>)  <span class="co"># for CRU 2.0 only!</span>
+pacifCentCRU &lt;-<span class="st"> </span>T
+if (var ==<span class="st"> &quot;pr&quot;</span> &amp;<span class="st"> </span>interpNAs) bound &lt;-<span class="st"> </span><span class="kw">Which</span>(<span class="kw">edge</span>(r, <span class="dt">type =</span> <span class="st">&quot;inner&quot;</span>) ==<span class="st"> </span><span class="dv">1</span>, <span class="dt">cells =</span> T)
+qfun &lt;-<span class="st"> </span>function(x, p) {
+    a &lt;-<span class="st"> </span><span class="kw">quantile</span>(x, p, <span class="dt">na.rm =</span> T)
+    x[x &lt;<span class="st"> </span>a[<span class="dv">1</span>]] &lt;-<span class="st"> </span>a[<span class="dv">1</span>]
+    x[x &gt;<span class="st"> </span>a[<span class="dv">2</span>]] &lt;-<span class="st"> </span>a[<span class="dv">2</span>]
+    x
+}
+
+<span class="co"># @kntir proc_func</span>
+f &lt;-<span class="st"> </span>function(j) {
+    s.clim &lt;-<span class="st"> </span><span class="kw">subset</span>(s, j)
+    if (var ==<span class="st"> &quot;pr&quot;</span> &amp;<span class="st"> </span>!<span class="kw">is.null</span>(pq)) {
+        m &lt;-<span class="st"> </span><span class="kw">qfun</span>(<span class="kw">getValues</span>(s.clim), <span class="dt">p =</span> pq)
+        s.clim &lt;-<span class="st"> </span><span class="kw">setValues</span>(s.clim, m)
+    }
+    if ((var ==<span class="st"> &quot;tas&quot;</span>) &amp;<span class="st"> </span>!<span class="kw">is.null</span>(tq)) {
+        m &lt;-<span class="st"> </span><span class="kw">qfun</span>(<span class="kw">getValues</span>(s.clim), <span class="dt">p =</span> tq)
+        s.clim &lt;-<span class="st"> </span><span class="kw">setValues</span>(s.clim, m)
+    }
+    if (var ==<span class="st"> &quot;pr&quot;</span> &amp;<span class="st"> </span>!<span class="kw">is.null</span>(setNAs)) {
+        if (!interpNAs) 
+            s.clim[s.clim &lt;=<span class="st"> </span>setNAs] &lt;-<span class="st"> </span><span class="ot">NA</span>
+        if (interpNAs) {
+            cres &lt;-<span class="st"> </span><span class="fl">0.5</span> *<span class="st"> </span><span class="kw">res</span>(s.clim)
+            xmn &lt;-<span class="st"> </span><span class="kw">xmin</span>(s.clim) +<span class="st"> </span>cres[<span class="dv">1</span>]
+            xmx &lt;-<span class="st"> </span><span class="kw">xmax</span>(s.clim) -<span class="st"> </span>cres[<span class="dv">1</span>]
+            ymn &lt;-<span class="st"> </span><span class="kw">ymin</span>(s.clim) +<span class="st"> </span>cres[<span class="dv">2</span>]
+            ymx &lt;-<span class="st"> </span><span class="kw">ymax</span>(s.clim) -<span class="st"> </span>cres[<span class="dv">2</span>]
+            x.out &lt;-<span class="st"> </span><span class="kw">seq</span>(xmn, xmx, <span class="dt">l =</span> <span class="kw">ncol</span>(s.clim))
+            y.out &lt;-<span class="st"> </span><span class="kw">seq</span>(ymn, ymx, <span class="dt">l =</span> <span class="kw">nrow</span>(s.clim))
+            xy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">xyFromCell</span>(s.clim, <span class="dv">1</span>:<span class="kw">ncell</span>(s.clim)))
+            v &lt;-<span class="st"> </span><span class="kw">getValues</span>(s.clim)
+            v[-true.na][v[-true.na] &lt;<span class="st"> </span>setNAs |<span class="st"> </span><span class="kw">is.na</span>(v[-true.na])] &lt;-<span class="st"> </span>setNAs  <span class="co"># for CRU 2.0 only!!!</span>
+            s.clim &lt;-<span class="st"> </span><span class="kw">setValues</span>(s.clim, v)  <span class="co"># for CRU 2.0 only!!!</span>
+            <span class="co"># v[-bound][v[-bound]&lt;setNAs] &lt;- NA if(any(is.na(v[-true.na]))) doInterp &lt;-</span>
+            <span class="co"># T else doInterp &lt;- F if(doInterp){ v[bound][v[bound]&lt;=setNAs] &lt;- setNAs</span>
+            <span class="co"># ind1 &lt;- which(is.na(v)) ind2 &lt;- which(v==setNAs) ind &lt;- sort(c(ind1,ind2))</span>
+            <span class="co"># spl &lt;- interp(xy[-ind1,1], xy[-ind1,2], v[-ind1], xo=x.out, yo=y.out,</span>
+            <span class="co"># linear=T, extrap=F) ## Bilinear spline interpolation m &lt;-</span>
+            <span class="co"># t(spl$z)[nrow(s.clim):1,] s.clim[ind] &lt;- t(m)[ind] }</span>
+            s.clim &lt;-<span class="st"> </span><span class="kw">mask</span>(s.clim, r)
+        }
+    }
+    if (pacifCentCRU) {
+        <span class="kw">extent</span>(s.clim) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>, <span class="kw">ymin</span>(s.clim), <span class="kw">ymax</span>(s.clim))
+        s.clim &lt;-<span class="st"> </span><span class="kw">rotate</span>(s.clim)
+        <span class="kw">extent</span>(s.clim) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">360</span>, <span class="kw">ymin</span>(s.clim), <span class="kw">ymax</span>(s.clim))
+        <span class="kw">projection</span>(s.clim) &lt;-<span class="st"> </span><span class="ot">NA</span>
+    }
+    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;brick subset climatology &quot;</span>, j, <span class="st">&quot; calculated&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dt">quote =</span> F)
+    <span class="co"># if(j==1) s.clim.hold &lt;- s.clim else s.clim.hold &lt;-</span>
+    <span class="co"># stack(s.clim.hold,s.clim)</span>
+    <span class="kw">return</span>(s.clim)
+}</code></pre>
+</div>
+<div id="run" class="section level4">
+<h4>Run</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># run</span>
+out &lt;-<span class="st"> </span><span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="dv">12</span>, f, <span class="dt">mc.cores =</span> <span class="dv">12</span>)
+for (i in <span class="dv">1</span>:<span class="dv">12</span>) {
+    if (i ==<span class="st"> </span><span class="dv">1</span>) 
+        s &lt;-<span class="st"> </span>out[[i]] else s &lt;-<span class="st"> </span><span class="kw">stack</span>(s, out[[i]])
+}
+if (var ==<span class="st"> &quot;tas&quot;</span>) <span class="kw">writeRaster</span>(s, <span class="kw">file.path</span>(path.out, <span class="st">&quot;tas_CRU_TS20_historical_climatology_01_12_1961_1990.tif&quot;</span>), 
+    <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">options =</span> <span class="st">&quot;COMPRESS=LZW&quot;</span>, <span class="dt">overwrite =</span> T) else if (var ==<span class="st"> </span>
+<span class="st">    &quot;pr&quot;</span>) <span class="kw">writeRaster</span>(s, <span class="kw">file.path</span>(path.out, <span class="st">&quot;pr_CRU_TS20_historical_climatology_01_12_1961_1990.tif&quot;</span>), 
+    <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">options =</span> <span class="st">&quot;COMPRESS=LZW&quot;</span>, <span class="dt">overwrite =</span> T)</code></pre>
+</div>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

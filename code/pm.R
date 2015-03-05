@@ -1,6 +1,6 @@
 # @knitr create_project
 source("C:/github/ProjectManagement/code/rpm.R") # eventually load a package instead of source script
-proj.name <- "CommCharts4" # Project name
+proj.name <- "Downscaling" # Project name
 proj.location <- matt.proj.path # Use default file location
 
 docDir <- c("Rmd/include", "md", "html", "Rnw", "pdf", "timeline")
@@ -30,20 +30,22 @@ proj.github <- file.path("https://github.com", user, proj.name)
 index.url <- "index.html"
 #file.copy(index.url, "index.html")
 
-proj.title <- "Community Charts"
-proj.menu <- c("Overview", "CC4 Lite", "R Code", "All Projects")
+proj.title <- "Downscaling"
+proj.menu <- c("Overview", "Climatologies", "Anomalies", "Downscaling", "All Projects")
 
 proj.submenu <- list(
 	c("empty"),
-	c("Levels of measurement", "Historical baseline", "Displaying variability", "divider", "Spatial scale", "Temperature", "Precipitation", "divider", "Color palettes", "Minutiae"),
-	c("empty"),
+	c("Main script", "climatologies.R", "divider", "Functions", "climPrep.R", "climCalc.R", "divider", "CRU 2.0", "cru20prelimExtraction"),
+	c("Main script", "anomalies.R", "divider", "Functions", "anomPrep.R", "anomCalc.R", "anomCalcAsScript.R", "anomParSubFunc.R"),
+	c("10-minute CRU 2.0", "ds_world10min.R"),
 	c("empty")
 )
 
 proj.files <- list(
 	c("index.html"),
-	c("01_measurement.html", "02_historical.html", "03_variability.html", "divider", "header", "04_scale_temp.html", "05_scale_precip.html", "divider", "06_colors.html", "07_minutiae.html"),
-	c("agg_city_data.html"),
+	c("header", "climatologies.R", "divider", "header", "climPrep.R", "climCalc.R", "divider", "header", "cru20prelimExtraction"),
+	c("header", "anomalies.R", "divider", "header", "anomPrep.R", "anomCalc.R", "anomCalcAsScript.R", "anomParSubFunc.R"),
+	c("header", "ds_world10min.R"),
 	c("http://leonawicz.github.io")
 )
 

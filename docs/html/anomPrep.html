@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/spacelab.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Downscaling</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="climatologies" class="dropdown-toggle" data-toggle="dropdown">Climatologies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="climatologies.R">climatologies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="climPrep.R">climPrep.R</a></li>
+              <li><a href="climCalc.R">climCalc.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">CRU 2.0</li>
+              <li><a href="cru20prelimExtraction">cru20prelimExtraction</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="anomalies" class="dropdown-toggle" data-toggle="dropdown">Anomalies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="anomalies.R">anomalies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="anomPrep.R">anomPrep.R</a></li>
+              <li><a href="anomCalc.R">anomCalc.R</a></li>
+              <li><a href="anomCalcAsScript.R">anomCalcAsScript.R</a></li>
+              <li><a href="anomParSubFunc.R">anomParSubFunc.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="downscaling" class="dropdown-toggle" data-toggle="dropdown">Downscaling <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">10-minute CRU 2.0</li>
+              <li><a href="ds_world10min.R">ds_world10min.R</a></li>
+            </ul>
+
+          <li><a href="http://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Downscaling">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="anomprep.r" class="section level2">
+<h2>anomPrep.R</h2>
+<p><code>anomPrep.R</code> contains the function, <code>anomPrep</code>. It is sourced by <code>anomalies.R</code>. <code>anomPrep</code> compiles metadata based on the data source used to calculate anomalies (e.g., CMIP3 or CMIP5 GCMs, various CRU data sets, or ERA 40 reanalysis data). This information is used by the function <code>anomCalc</code> to properly carry out the anomalies geotiff generation for a given data source.</p>
+<div id="r-code" class="section level3">
+<h3>R code</h3>
+<pre class="sourceCode r"><code class="sourceCode r">anomPrep &lt;-<span class="st"> </span>function(dataset, years, yrs.clim, <span class="dt">scenario =</span> <span class="ot">NULL</span>) {
+    if (<span class="kw">max</span>(yrs.clim) &gt;<span class="st"> </span><span class="dv">2005</span> &amp;<span class="st"> </span><span class="kw">is.null</span>(scenario)) 
+        <span class="kw">stop</span>(<span class="st">&quot;Must provide scenario name of base climatology if using a projected climatology period&quot;</span>)
+    if (<span class="kw">max</span>(yrs.clim) &lt;<span class="st"> </span><span class="dv">2001</span>) 
+        climID &lt;-<span class="st"> &quot;historical&quot;</span> else climID &lt;-<span class="st"> &quot;projected&quot;</span>
+    if (dataset ==<span class="st"> &quot;AR4gcm&quot;</span> |<span class="st"> </span>dataset ==<span class="st"> &quot;AR5gcm&quot;</span>) {
+        datID &lt;-<span class="st"> &quot;GCM&quot;</span>
+        arID &lt;-<span class="st"> </span><span class="kw">substr</span>(dataset, <span class="dv">1</span>, <span class="dv">3</span>)
+        varid &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tas&quot;</span>, <span class="st">&quot;pr&quot;</span>)
+        if (<span class="kw">any</span>(years &gt;<span class="st"> </span><span class="dv">2005</span>)) {
+            if (arID ==<span class="st"> &quot;AR4&quot;</span> &amp;<span class="st"> </span>(years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">2001</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2100</span>)) 
+                <span class="kw">stop</span>(<span class="st">&quot;Year range for AR4 projected GCMs restricted to 2001:2100&quot;</span>)
+            if (arID ==<span class="st"> &quot;AR5&quot;</span> &amp;<span class="st"> </span>(years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">2006</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2100</span>)) 
+                <span class="kw">stop</span>(<span class="st">&quot;Year range for AR5 projected GCMs restricted to 2006:2100&quot;</span>)
+            if (arID ==<span class="st"> &quot;AR4&quot;</span>) 
+                scen &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;sresb1&quot;</span>, <span class="st">&quot;sresa1b&quot;</span>, <span class="st">&quot;sresa2&quot;</span>) else if (arID ==<span class="st"> &quot;AR5&quot;</span>) 
+                scen &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;rcp26&quot;</span>, <span class="st">&quot;rcp45&quot;</span>, <span class="st">&quot;rcp60&quot;</span>, <span class="st">&quot;rcp85&quot;</span>)
+            if (!<span class="kw">is.null</span>(scenario)) 
+                scen &lt;-<span class="st"> </span>scenario else scenario &lt;-<span class="st"> &quot;historical&quot;</span>
+            varid &lt;-<span class="st"> </span><span class="kw">rep</span>(varid, <span class="dt">each =</span> <span class="kw">length</span>(scen))
+            scen &lt;-<span class="st"> </span><span class="kw">rep</span>(scen, <span class="kw">length</span>(<span class="kw">unique</span>(varid)))
+            mainDir &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;/Data/Base_Data/Climate/World/GCM_raw/IPCC_&quot;</span>, 
+                arID, <span class="st">&quot;_monthly/projected_tifs/&quot;</span>, scen, <span class="st">&quot;/&quot;</span>, varid, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+            pat =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^&quot;</span>, .(arID), 
+                <span class="st">&quot;_GCM.*.&quot;</span>, .(scenario), <span class="st">&quot;.*.&quot;</span>)), <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
+            climDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(climDir1, <span class="kw">list.files</span>(climDir1, <span class="dt">pattern =</span> pat))
+        } else {
+            if (arID ==<span class="st"> &quot;AR4&quot;</span> &amp;<span class="st"> </span>(years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">1850</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2000</span>)) 
+                <span class="kw">stop</span>(<span class="st">&quot;Year range for AR4 historical GCMs restricted to 1850:2000&quot;</span>)
+            if (arID ==<span class="st"> &quot;AR5&quot;</span> &amp;<span class="st"> </span>(years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">1850</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2005</span>)) 
+                <span class="kw">stop</span>(<span class="st">&quot;Year range for AR5 historical GCMs restricted to 1850:2005&quot;</span>)
+            scen &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;historical&quot;</span>, <span class="kw">length</span>(varid))
+            mainDir &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;/Data/Base_Data/Climate/World/GCM_raw/IPCC_&quot;</span>, 
+                arID, <span class="st">&quot;_monthly/historical_tifs/&quot;</span>, varid, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+            pat =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^&quot;</span>, .(arID), 
+                <span class="st">&quot;_GCM.*.historical.*.&quot;</span>)), <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
+            climDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(climDir1, <span class="kw">list.files</span>(climDir1, <span class="dt">pattern =</span> pat))
+        }
+        files &lt;-<span class="st"> </span>modinfo &lt;-<span class="st"> </span>modnames &lt;-<span class="st"> </span><span class="kw">list</span>()
+        for (i in <span class="dv">1</span>:<span class="kw">length</span>(mainDir)) {
+            files[[i]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[i], <span class="dt">pattern =</span> <span class="st">&quot;.tif$&quot;</span>)
+            modinfo[[i]] &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, <span class="kw">strsplit</span>(files[[i]], <span class="st">&quot;_&quot;</span>))[, <span class="dv">1</span>:<span class="dv">5</span>]
+            modnames[[i]] &lt;-<span class="st"> </span>modinfo[[i]][, <span class="dv">3</span>]
+        }
+    } else if (dataset ==<span class="st"> &quot;cru322&quot;</span>) {
+        datID &lt;-<span class="st"> &quot;CRU&quot;</span>
+        arID &lt;-<span class="st"> &quot;&quot;</span>
+        if (years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">1901</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2013</span>) 
+            <span class="kw">stop</span>(<span class="st">&quot;Year range for CRU 3.22 restricted to 1901:2013&quot;</span>)
+        scen &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>), <span class="dv">2</span>)
+        varid &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tas&quot;</span>, <span class="st">&quot;pr&quot;</span>)
+        mainDir &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">file.path</span>(<span class="st">&quot;/Data/Base_Data/Climate/World/CRU_grids/CRU_TS322&quot;</span>), 
+            <span class="dv">2</span>)
+        pat =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^CRU_TS32.*.historical.*.&quot;</span>)), 
+            <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
+        climDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(climDir1, <span class="kw">list.files</span>(climDir1, <span class="dt">pattern =</span> pat))
+        files &lt;-<span class="st"> </span>modnames &lt;-<span class="st"> </span><span class="kw">list</span>()
+        files[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[<span class="dv">1</span>], <span class="dt">pattern =</span> <span class="st">&quot;*.tmp.*.nc$&quot;</span>)
+        files[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[<span class="dv">2</span>], <span class="dt">pattern =</span> <span class="st">&quot;*.pre.*.nc$&quot;</span>)
+        modinfo &lt;-<span class="st"> </span><span class="ot">NULL</span>
+        modnames[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>modnames[[<span class="dv">1</span>]] &lt;-<span class="st"> &quot;CRU_TS32&quot;</span>
+    } else if (dataset ==<span class="st"> &quot;cru3101&quot;</span>) {
+        datID &lt;-<span class="st"> &quot;CRU&quot;</span>
+        arID &lt;-<span class="st"> &quot;&quot;</span>
+        if (years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">1901</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2009</span>) 
+            <span class="kw">stop</span>(<span class="st">&quot;Year range for CRU 3.1.01 restricted to 1901:2009&quot;</span>)
+        scen &lt;-<span class="st"> &quot;historical&quot;</span>
+        varid &lt;-<span class="st"> &quot;pr&quot;</span>
+        mainDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;/DataBase_Data/Climate/World/CRU_grids/CRU_TS31_01&quot;</span>)
+        pat =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^CRU_TS31.*.historical.*.&quot;</span>)), 
+            <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
+        climDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(climDir1, <span class="kw">list.files</span>(climDir1, <span class="dt">pattern =</span> pat))
+        files &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir, <span class="dt">pattern =</span> <span class="st">&quot;*.pre.*.nc$&quot;</span>)
+        modinfo &lt;-<span class="st"> </span><span class="ot">NULL</span>
+        modnames &lt;-<span class="st"> &quot;CRU_TS31&quot;</span>
+    } else if (dataset ==<span class="st"> &quot;cru31&quot;</span>) {
+        datID &lt;-<span class="st"> &quot;CRU&quot;</span>
+        arID &lt;-<span class="st"> &quot;&quot;</span>
+        if (years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">1901</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2009</span>) 
+            <span class="kw">stop</span>(<span class="st">&quot;Year range for CRU 3.1 restricted to 1901:2009&quot;</span>)
+        scen &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>), <span class="dv">2</span>)
+        varid &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tas&quot;</span>, <span class="st">&quot;pr&quot;</span>)
+        mainDir &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">file.path</span>(<span class="st">&quot;/DataBase_Data/Climate/World/CRU_grids/CRU_TS31&quot;</span>), 
+            <span class="dv">2</span>)
+        pat =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^CRU_TS31.*.historical.*.&quot;</span>)), 
+            <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
+        climDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(climDir1, <span class="kw">list.files</span>(climDir1, <span class="dt">pattern =</span> pat))
+        files &lt;-<span class="st"> </span>modnames &lt;-<span class="st"> </span><span class="kw">list</span>()
+        files[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[<span class="dv">1</span>], <span class="dt">pattern =</span> <span class="st">&quot;*.tmp.*.nc$&quot;</span>)
+        files[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[<span class="dv">2</span>], <span class="dt">pattern =</span> <span class="st">&quot;*.pre.*.nc$&quot;</span>)
+        modinfo &lt;-<span class="st"> </span><span class="ot">NULL</span>
+        modnames[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>modnames[[<span class="dv">1</span>]] &lt;-<span class="st"> &quot;CRU_TS31&quot;</span>
+    } else if (dataset ==<span class="st"> &quot;cru30&quot;</span>) {
+        datID &lt;-<span class="st"> &quot;CRU&quot;</span>
+        arID &lt;-<span class="st"> &quot;&quot;</span>
+        if (years[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">1901</span> |<span class="st"> </span>years[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2006</span>) 
+            <span class="kw">stop</span>(<span class="st">&quot;Year range for CRU 3.0 restricted to 1901:2006&quot;</span>)
+        scen &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;historical&quot;</span>), <span class="dv">2</span>)
+        varid &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tas&quot;</span>, <span class="st">&quot;pr&quot;</span>)
+        mainDir &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">file.path</span>(<span class="st">&quot;/DataBase_Data/Climate/World/CRU_grids/CRU_TS30&quot;</span>), 
+            <span class="dv">2</span>)
+        pat =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;expression&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">paste</span>(<span class="kw">bquote</span>(<span class="kw">expression</span>(<span class="st">&quot;^CRU_TS30.*.historical.*.&quot;</span>)), 
+            <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
+        climDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(climDir1, <span class="kw">list.files</span>(climDir1, <span class="dt">pattern =</span> pat))
+        files &lt;-<span class="st"> </span>modnames &lt;-<span class="st"> </span><span class="kw">list</span>()
+        files[[<span class="dv">1</span>]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[<span class="dv">1</span>], <span class="dt">pattern =</span> <span class="st">&quot;*.tmp.*.nc$&quot;</span>)
+        files[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">list.files</span>(mainDir[<span class="dv">2</span>], <span class="dt">pattern =</span> <span class="st">&quot;*.pre.*.nc$&quot;</span>)
+        modinfo &lt;-<span class="st"> </span><span class="ot">NULL</span>
+        modnames[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>modnames[[<span class="dv">1</span>]] &lt;-<span class="st"> &quot;CRU_TS30&quot;</span>
+    }
+    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">datID =</span> datID, <span class="dt">arID =</span> arID, <span class="dt">scen =</span> scen, <span class="dt">varid =</span> varid, <span class="dt">mainDir =</span> mainDir, 
+        <span class="dt">climDir =</span> climDir, <span class="dt">files =</span> files, <span class="dt">modinfo =</span> modinfo, <span class="dt">modnames =</span> modnames))
+}</code></pre>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
