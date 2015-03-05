@@ -4,7 +4,7 @@ author: Matthew Leonawicz
 output:
   html_document:
     toc: false
-    theme: spacelab
+    theme: flatly
     highlight: zenburn
     keep_md: true
 ---
