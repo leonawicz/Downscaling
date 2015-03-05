@@ -29,9 +29,17 @@ Furthermore, though similar, the methods used in this version of downscaling are
 
 ### R code
 
+#### Setup
+
 ```{r setup}
 ```
+
+#### Processing function
+
 ```{r function}
 ```
+
+#### Run downscaling
+
 ```{r run}
 ```

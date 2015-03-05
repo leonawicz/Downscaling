@@ -1,5 +1,4 @@
 ---
-title: cru20prelimExtraction.R
 output:
   html_document:
     toc: false
@@ -13,45 +12,20 @@ opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
 read_chunk("../../code/cru20prelimExtraction.R")
 ```
 
+##
+##
+## cru20prelimExtraction.R
 
-## Introduction
-ADD_TEXT_HERE
+`cru20prelimExtraction.R` loads CRU 2.0 10-minute resolution climatology data, rasterizes it, applies minor adjustments which fascilitate robust downscaling, and saves output files as geotiffs.
 
-### Motivation
-ADD_TEXT_HERE
+### R code
 
-### Details
-ADD_TEXT_HERE
+#### Setup
 
-#### Capabilities
-ADD_TEXT_HERE
-
-#### Limitations
-ADD_TEXT_HERE
-
-## Related items
-
-### Files and Data
-ADD_TEXT_HERE
-
-### Code flow
-ADD_TEXT_HERE
-
-```{r code_sankey, echo=F, eval=T}
-```
-
-```{r code_sankey_embed, echo=F, eval=T, comment=NA, results="asis", tidy=F}
-```
-
-## R code
-
-### Setup
-ADD_TEXT_HERE: EXAMPLE
-Setup consists of loading required **R** packages and additional files, preparing any command line arguments for use, and defining functions and other **R** objects.
-
-
-NEW_CODE_CHUNKS
 ```{r setup}
 ```
+
+#### Run
+
 ```{r run}
 ```
