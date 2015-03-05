@@ -43,9 +43,9 @@ proj.submenu <- list(
 
 proj.files <- list(
 	c("index.html"),
-	c("header", "climatologies.R", "divider", "header", "climPrep.R", "climCalc.R", "divider", "header", "cru20prelimExtraction"),
-	c("header", "anomalies.R", "divider", "header", "anomPrep.R", "anomCalc.R", "anomCalcAsScript.R", "anomParSubFunc.R"),
-	c("header", "ds_world10min.R"),
+	c("header", "climatologies.html", "divider", "header", "climPrep.html", "climCalc.html", "divider", "header", "cru20prelimExtraction"),
+	c("header", "anomalies.html", "divider", "header", "anomPrep.html", "anomCalc.html", "anomCalcAsScript.html", "anomParSubFunc.html"),
+	c("header", "ds_world10min.html"),
 	c("http://leonawicz.github.io")
 )
 
@@ -73,29 +73,6 @@ files.Rmd <- list.files(pattern=".Rmd$", full=T)
 # @knitr save
 # write all yaml front-matter-specified outputs to Rmd directory for all Rmd files
 lapply(files.Rmd, render, output_format="all")
-#### Search and replace ####
-# remove hardcoded rChart plot dimension settings
-# replace any instance of _DEGREE_SYMBOL_ with ° in md or html files #### symbol does not carry through directly when using rmarkdown::render
-swap <- function(i, filename, l){
-	filename <- filename[[i]]
-	ext <- tail(strsplit(filename, "\\.")[[1]], 1)
-	x <- l[[i]]
-	x <- gsub("&quot;width&quot;:            800,", "", x)
-	x <- gsub("&quot;height&quot;:            400,", "", x)
-	x <- gsub("800px", "100%", x)
-	x <- gsub("400px", "500px", x)
-	if(ext=="md") x <- gsub("_DEGREE_SYMBOL_", "\u00b0", x)
-	if(ext=="html") x <- gsub("_DEGREE_SYMBOL_", "\uc2\ub0", x)
-	z <- file(filename)
-	writeLines(x, z)
-	close(z)
-	return()
-}
-
-sub.files <- c(list.files(pattern="\\.md$", full=TRUE), list.files(pattern="\\.html$", full=TRUE))
-l <- lapply(sub.files, readLines)
-lapply(1:length(l), swap, filename=sub.files, l=l)
-
 insert_gatc(list.files(pattern=".html$"))
 moveDocs(path.docs=docs.path)
 
