@@ -1,0 +1,27 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/anomPrep.R")
+```
+
+##
+##
+## anomPrep.R
+
+`anomPrep.R` contains the function, `anomPrep`.
+It is sourced by `anomalies.R`.
+`anomPrep` compiles metadata based on the data source used to calculate anomalies (e.g., CMIP3 or CMIP5 GCMs, various CRU data sets, or ERA 40 reanalysis data).
+This information is used by the function `anomCalc` to properly carry out the anomalies geotiff generation for a given data source.
+
+### R code
+
+```{r func_anomPrep}
+```

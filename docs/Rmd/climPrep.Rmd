@@ -1,0 +1,27 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/climPrep.R")
+```
+
+##
+##
+## climPrep.R
+
+`climPrep.R` contains the function, `climPrep`.
+It is sourced by `climatologies.R`.
+`climPrep` compiles metadata based on the data source used to calculate climatologies (e.g., CMIP3 or CMIP5 GCMs, various CRU data sets, or ERA 40 reanalysis data).
+This information is used by the function `climCalc` to properly carry out the climatologies geotiff generation for a given data source.
+
+### R code
+
+```{r func_climPrep}
+```

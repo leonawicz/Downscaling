@@ -1,0 +1,33 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/climatologies.R")
+```
+
+##
+##
+## climatologies.R
+
+This script generates monthly climatologies geotiffs.
+`climatologies.R` uses the original annual geotiffs to produce climatologies for each month.
+An arbitrary climatology period may be specified.
+Common periods include 1961-1990, 1971-2000, and 1958-2001.
+Periods are chosen based on the climatology period of an alternate higher-resolution data set to which the data here will eventually be downscaled.
+Climatology geotiffs are created for the climate variables temperature and precipitation, and in some cases sea level pressure.
+Each mutli-band geotiff contains twelve monthly bands.
+
+`climatologies.R` is the first preparatory script run as part of the overall downscaling process chain,
+although climatologies are often used for other unrelated projects as well.
+
+### R code
+
+```{r clim}
+```

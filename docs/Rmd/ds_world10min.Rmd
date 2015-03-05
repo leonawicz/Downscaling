@@ -1,0 +1,37 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/ds_world10min.R")
+```
+
+
+##
+##
+## ds_world10min.R
+
+This script downscales monthly climate anomalies geotiffs to CRU 2.0 10-minute resolution monthly climatologies, which cover the world grid less some extreme latitudes.
+The monthly climatologies used are technically derived climatologies which incorporate some methods that help make downscaling more robust to extreme outliers and downscaling artifacts.
+For this reason they are not identical to the original CRU 2.0 10-minute monthly climatologies.
+
+Unlike the `climatologies.R` and `amomalies.R` which create their respective geotiffs for any of a number of different data sets,
+this downscaling script strictly performs downscaling to 10-minute resolution using CRU climatologies.
+Furthermore, though similar, the methods used in this version of downscaling are not the same as those employed when downscaling to the higher-resolution PRISM climatologies for example.
+
+`ds_world10min.R` is called with command line arguments by one of two SLURM scripts, `ds_world10min_cru.slurm` or `ds_world10min_gcm.slurm`.
+
+### R code
+
+```{r setup}
+```
+```{r function}
+```
+```{r run}
+```

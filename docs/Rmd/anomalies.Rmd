@@ -1,0 +1,32 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/anomalies.R")
+```
+
+##
+##
+## anomalies.R
+
+This script generates monthly climate anomalies geotiffs.
+`anomalies.R` uses the original annual geotiffs and the climatologies previously generated from these originals by `climatologies.R`.
+`climatologies.R` must be run before `anomalies.R` for any given data set.
+
+This is done for each month and for the climate variables temperature and precipitation, and in some cases sea level pressure.
+Each mutli-band geotiff contains annual bands, the number of bands depending on the number of years in the original data set.
+
+After anomalies are created, they may be downscaled to alternate climatologies of higher spatial resolution, e.g., PRISM 771-m, PRISM 2-km, or CRU 2.0 10-minute.
+Examples of downscaled data products include SNAP's CMIP3 and CMIP5 global climate models and CRU 3.0, 3.1, and 3.22.
+
+### R code
+
+```{r anom}
+```

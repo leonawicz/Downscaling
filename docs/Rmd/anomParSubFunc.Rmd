@@ -1,0 +1,26 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/anomParSubFunc.R")
+```
+
+##
+##
+## anomParSubFunc.R
+
+`anomParSubFunc.R` contains the function, `anomCalcSubFun`.
+It is sourced by `anomCalcAsScript.R` for parallel processing across months for a single data set.
+This is an alternative to serial processing across months, which is the default when multiple data sets are processed at once.
+
+### R code
+
+```{r func_anomCalcSubFun}
+```

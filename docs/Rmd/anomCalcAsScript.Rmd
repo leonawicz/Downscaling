@@ -1,0 +1,32 @@
+---
+output:
+  html_document:
+    toc: false
+    theme: spacelab
+    highlight: zenburn
+    keep_md: true
+---
+
+```{r knitr_setup, echo=FALSE}
+opts_chunk$set(cache=FALSE, eval=FALSE, tidy=TRUE, message=FALSE, warning=FALSE)
+read_chunk("../../code/anomCalcAsScript.R")
+```
+
+##
+##
+## anomCalcAsScript.R
+
+`anomCalcAsScript.R` is similar to `anomCalc.R` except that it is, under certain conditions, sourced later in `anomalies.R` in script form rather than as calling a function.
+The result is that same as with `anomCalc.R`, which is the calculation of climate anomalies geotiffs.
+
+The methods differ in that calling this script from `anomalies.R` rather than calling the `anomCalc` function, offers a different point of parallelization.
+Instead of parallelizing across data sets, `anomCalcAsScript.R` is often used to process a single data set while parallelizing across twelve months.
+
+This is ideal for CRU data sets, for reprocessing a single GCM, or for processing multiple GCMs one at a time where the GCMs may differ substantially in respective file sizes.
+However, this is strictly available for CRU at this time, which is always processed one data set at a time (hence there is no reason not to use this method).
+This option remains currently unavailable for GCM anomalies geotiff generation until some code updates can be made.
+
+### R code
+
+```{r anom_script}
+```
