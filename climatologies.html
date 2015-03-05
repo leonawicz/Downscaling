@@ -8,10 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-<meta name="author" content="Matthew Leonawicz" />
 
 
-<title>SNAP Data Downscaling</title>
+<title></title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,6 +44,33 @@ margin-top: 45px;
 </style>
 <link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
 
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 
@@ -141,10 +167,6 @@ img {
     </div>
   </div>
 
-<div id="header">
-<h1 class="title">SNAP Data Downscaling</h1>
-<h4 class="author"><em>Matthew Leonawicz</em></h4>
-</div>
 
 
 <div id="section" class="section level2">
@@ -153,11 +175,44 @@ img {
 <div id="section-1" class="section level2">
 <h2></h2>
 </div>
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>Here you will find <strong>R</strong> code used to downscale climate data sets at SNAP. These pages are a work in progress. Currently, they only include raw <strong>R</strong> code and not much else in the way of commentary.</p>
-<p>Also, these pages are incomplete. The code related to the more preparatory stages dealing with climatology and anomaly calculation has thorough coverage, but the actual end-stage downscaling code currently available here is only in relation to CRU 2.0 10-minute resolution downscaling. Post-processing code related to calculation of summary statistics and creation of other derived data products is not included at all at this time.</p>
-<p>A thorough code flow diagram will be added, as seen on my other Github project pages, once the remainder of downscaling-related code has been including in these pages.</p>
+<div id="climatologies.r" class="section level2">
+<h2>climatologies.R</h2>
+<p>This script generates monthly climatologies geotiffs. <code>climatologies.R</code> uses the original annual geotiffs to produce climatologies for each month. An arbitrary climatology period may be specified. Common periods include 1961-1990, 1971-2000, and 1958-2001. Periods are chosen based on the climatology period of an alternate higher-resolution data set to which the data here will eventually be downscaled. Climatology geotiffs are created for the climate variables temperature and precipitation, and in some cases sea level pressure. Each mutli-band geotiff contains twelve monthly bands.</p>
+<p><code>climatologies.R</code> is the first preparatory script run as part of the overall downscaling process chain, although climatologies are often used for other unrelated projects as well.</p>
+<div id="r-code" class="section level3">
+<h3>R code</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<span class="kw">library</span>(parallel)
+
+<span class="co"># Source functions</span>
+path.fun &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;/workspace/UA/mfleonawicz/leonawicz/projects/Downscaling/code&quot;</span>)
+<span class="kw">source</span>(<span class="kw">file.path</span>(path.fun, <span class="st">&quot;climPrep.R&quot;</span>))
+<span class="kw">source</span>(<span class="kw">file.path</span>(path.fun, <span class="st">&quot;climCalc.R&quot;</span>))
+
+#### Choose datasets (current options: &#39;cru30&#39; &#39;cru31&#39; &#39;cru3101&#39; &#39;cru322&#39;
+#### &#39;ERA40&#39; &#39;AR4gcm&#39; &#39;AR5gcm&#39;) #### Note cru3101 will still place
+#### precipitation outputs into in a &#39;CRU31&#39; folder.
+dataset &lt;-<span class="st"> &quot;cru322&quot;</span>
+
+#### Set year ranges for reference climatology period ####
+yrs.clim &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1961</span>, <span class="dv">1990</span>)
+
+#### Top level climatology directory ####
+<span class="kw">dir.create</span>(newDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;/Data/Base_Data/Climate/World/Climatologies&quot;</span>), 
+    <span class="dt">showWarnings =</span> F)
+
+#### Set to TRUE is resampling outputs to a new grid and specify any raster
+#### layer as the new grid ####
+resample &lt;-<span class="st"> </span>F
+if (resample) r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">file.path</span>(drive[<span class="dv">3</span>], <span class="st">&quot;/Base_Data/Climate/World/ERA40/ERA40_historical_monthly_195709-200208.nc&quot;</span>), 
+    <span class="dt">varname =</span> <span class="st">&quot;t2m&quot;</span>, <span class="dt">layer =</span> <span class="dv">1</span>)
+
+dp &lt;-<span class="st"> </span><span class="kw">climPrep</span>(dataset, yrs.clim, <span class="dt">include.psl =</span> F)  <span class="co"># add include.psl=T if psl is to be included. Only available for ERA40 and historical GCMs.</span>
+for (i in <span class="dv">1</span>:<span class="kw">length</span>(dp)) <span class="kw">assign</span>(<span class="kw">names</span>(dp)[i], dp[[i]])
+for (k in <span class="dv">1</span>:<span class="kw">length</span>(mainDir)) <span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(files[[k]]), climCalc, <span class="dt">yr1 =</span> yrs.clim[<span class="dv">1</span>], 
+    <span class="dt">yr2 =</span> yrs.clim[<span class="dv">2</span>], <span class="dt">var =</span> varid[k], <span class="dt">scen =</span> scen[k], <span class="dt">datID =</span> datID, <span class="dt">arID =</span> arID, 
+    <span class="dt">pq =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>), <span class="dt">tq =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>), <span class="dt">setNAs =</span> <span class="fl">0.5</span>, <span class="dt">interpNAs =</span> T, <span class="dt">mc.cores =</span> <span class="kw">length</span>(files[[k]]))</code></pre>
+</div>
 </div>
 
 <!-- some extra javascript for older browsers -->
