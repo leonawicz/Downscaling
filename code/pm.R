@@ -35,7 +35,7 @@ proj.menu <- c("Overview", "Climatologies", "Anomalies", "Downscaling", "All Pro
 
 proj.submenu <- list(
 	c("empty"),
-	c("Main script", "climatologies.R", "divider", "Functions", "climPrep.R", "climCalc.R", "divider", "CRU 2.0", "cru20prelimExtraction"),
+	c("Main script", "climatologies.R", "divider", "Functions", "climPrep.R", "climCalc.R", "divider", "CRU 2.0", "cru20prelimExtraction.R"),
 	c("Main script", "anomalies.R", "divider", "Functions", "anomPrep.R", "anomCalc.R", "anomCalcAsScript.R", "anomParSubFunc.R"),
 	c("10-minute CRU 2.0", "ds_world10min.R"),
 	c("empty")
