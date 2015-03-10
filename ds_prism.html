@@ -445,17 +445,6 @@ f &lt;-<span class="st"> </span>function(j, i, <span class="dt">par.by.month =</
             <span class="kw">print</span>(<span class="kw">difftime</span>(t.off, t.on))
             t.on &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
             
-            isCRU &lt;-<span class="st"> </span><span class="kw">substr</span>(models[j], <span class="dv">1</span>, <span class="dv">3</span>) ==<span class="st"> &quot;CRU&quot;</span>
-            file.year.ind &lt;-<span class="st"> </span>if (isCRU) 
-                <span class="dv">7</span>:<span class="dv">8</span> else <span class="dv">9</span>:<span class="dv">10</span>
-            yrs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(file.t), <span class="st">&quot;_&quot;</span>))[file.year.ind], 
-                <span class="dv">1</span>, <span class="dv">4</span>))
-            yrs &lt;-<span class="st"> </span><span class="kw">seq</span>(yrs[<span class="dv">1</span>], yrs[<span class="dv">2</span>])
-            <span class="kw">dir.create</span>(outDir.t &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;//&quot;</span>, <span class="st">&quot;/&quot;</span>, <span class="kw">file.path</span>(outDir, period.scenario[<span class="dv">1</span>], 
-                grp2, period.scenario[<span class="dv">2</span>], models[j], <span class="st">&quot;tas&quot;</span>)), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
-            <span class="kw">dir.create</span>(outDir.p &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;//&quot;</span>, <span class="st">&quot;/&quot;</span>, <span class="kw">file.path</span>(outDir, period.scenario[<span class="dv">1</span>], 
-                grp2, period.scenario[<span class="dv">2</span>], models[j], <span class="st">&quot;pr&quot;</span>)), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
-            
             <span class="co"># b.new.t &lt;- get(paste0(&#39;b.t.&#39;, k), envir=.GlobalEnv)</span>
             nc &lt;-<span class="st"> </span><span class="kw">ncol</span>(b.new.t)
             for (h in <span class="dv">1</span>:<span class="kw">nlayers</span>(b.new.t)) {
