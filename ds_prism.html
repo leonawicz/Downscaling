@@ -234,8 +234,277 @@ period.scenario &lt;-<span class="st"> </span>if (scenario ==<span class="st"> &
 models &lt;-<span class="st"> </span><span class="kw">list.files</span>(anomDir[i])
 models &lt;-<span class="st"> </span>models[models %in%<span class="st"> </span>allowed.models]</code></pre>
 </div>
+<div id="support-function" class="section level4">
+<h4>Support function</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Support function for method=&#39;akima&#39;</span>
+trim2 &lt;-<span class="st"> </span>function(x, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">out =</span> <span class="st">&quot;matrix&quot;</span>, <span class="dt">rc.ind =</span> F, <span class="dt">xy.ext =</span> F) {
+    if (!<span class="kw">any</span>(out ==<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;raster&quot;</span>))) 
+        <span class="kw">stop</span>(<span class="st">&quot;output must be a matrix or raster&quot;</span>)
+    if (<span class="kw">class</span>(x) ==<span class="st"> &quot;matrix&quot;</span>) {
+        if (<span class="kw">class</span>(y) !=<span class="st"> &quot;RasterLayer&quot;</span> &amp;<span class="st"> </span>(out ==<span class="st"> &quot;raster&quot;</span> |<span class="st"> </span>xy.ext ==<span class="st"> </span>T)) 
+            <span class="kw">stop</span>(<span class="st">&quot;must input spatial information for raster or extent outputs&quot;</span>)
+        if (out ==<span class="st"> &quot;raster&quot;</span> |<span class="st"> </span>xy.ext ==<span class="st"> </span>T) {
+            cres &lt;-<span class="st"> </span><span class="fl">0.5</span> *<span class="st"> </span><span class="kw">res</span>(y)
+            crs &lt;-<span class="st"> </span><span class="kw">projection</span>(y)
+        }
+    }
+    if (<span class="kw">class</span>(x) ==<span class="st"> &quot;RasterLayer&quot;</span>) {
+        if (out ==<span class="st"> &quot;raster&quot;</span> |<span class="st"> </span>xy.ext ==<span class="st"> </span>T) {
+            cres &lt;-<span class="st"> </span><span class="fl">0.5</span> *<span class="st"> </span><span class="kw">res</span>(x)
+            crs &lt;-<span class="st"> </span><span class="kw">projection</span>(x)
+            y &lt;-<span class="st"> </span>x
+        }
+        x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">as.array</span>(x), <span class="dt">nrow =</span> <span class="kw">nrow</span>(x), <span class="dt">ncol =</span> <span class="kw">ncol</span>(x))
+    }
+    if (<span class="kw">class</span>(x) !=<span class="st"> &quot;matrix&quot;</span>) {
+        <span class="kw">stop</span>(<span class="st">&quot;x must be of class raster or matrix&quot;</span>)
+    } else {
+        r.na &lt;-<span class="st"> </span>c.na &lt;-<span class="st"> </span><span class="kw">c</span>()
+        for (i in <span class="dv">1</span>:<span class="kw">nrow</span>(x)) r.na &lt;-<span class="st"> </span><span class="kw">c</span>(r.na, <span class="kw">all</span>(<span class="kw">is.na</span>(x[i, ])))
+        for (i in <span class="dv">1</span>:<span class="kw">ncol</span>(x)) c.na &lt;-<span class="st"> </span><span class="kw">c</span>(c.na, <span class="kw">all</span>(<span class="kw">is.na</span>(x[, i])))
+        r1 &lt;-<span class="st"> </span><span class="dv">1</span> +<span class="st"> </span><span class="kw">which</span>(<span class="kw">diff</span>(<span class="kw">which</span>(r.na)) &gt;<span class="st"> </span><span class="dv">1</span>)[<span class="dv">1</span>]
+        r2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(x) -<span class="st"> </span><span class="kw">which</span>(<span class="kw">diff</span>(<span class="kw">which</span>(<span class="kw">rev</span>(r.na))) &gt;<span class="st"> </span><span class="dv">1</span>)[<span class="dv">1</span>]
+        c1 &lt;-<span class="st"> </span><span class="dv">1</span> +<span class="st"> </span><span class="kw">which</span>(<span class="kw">diff</span>(<span class="kw">which</span>(c.na)) &gt;<span class="st"> </span><span class="dv">1</span>)[<span class="dv">1</span>]
+        c2 &lt;-<span class="st"> </span><span class="kw">ncol</span>(x) -<span class="st"> </span><span class="kw">which</span>(<span class="kw">diff</span>(<span class="kw">which</span>(<span class="kw">rev</span>(c.na))) &gt;<span class="st"> </span><span class="dv">1</span>)[<span class="dv">1</span>]
+        x &lt;-<span class="st"> </span>x[r1:r2, c1:c2]
+        if (out ==<span class="st"> &quot;raster&quot;</span> |<span class="st"> </span>xy.ext ==<span class="st"> </span>T) {
+            xs &lt;-<span class="st"> </span><span class="kw">xFromCol</span>(y, <span class="dt">col =</span> <span class="kw">c</span>(c1, c2)) +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">1</span>) *<span class="st"> </span>cres[<span class="dv">1</span>]
+            ys &lt;-<span class="st"> </span><span class="kw">yFromRow</span>(y, <span class="dt">row =</span> <span class="kw">c</span>(r2, r1)) +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">1</span>) *<span class="st"> </span>cres[<span class="dv">2</span>]
+        }
+        if (out ==<span class="st"> &quot;raster&quot;</span>) 
+            x &lt;-<span class="st"> </span><span class="kw">raster</span>(x, <span class="dt">xmn =</span> xs[<span class="dv">1</span>], <span class="dt">xmx =</span> xs[<span class="dv">2</span>], <span class="dt">ymn =</span> ys[<span class="dv">1</span>], <span class="dt">ymx =</span> ys[<span class="dv">2</span>], 
+                <span class="dt">crs =</span> crs)
+        if (rc.ind ==<span class="st"> </span>T &amp;<span class="st"> </span>xy.ext ==<span class="st"> </span>T) {
+            x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">rc =</span> <span class="kw">c</span>(r1, r2, c1, c2), <span class="dt">xy =</span> <span class="kw">c</span>(xs, ys))
+        } else if (rc.ind) {
+            x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">rc =</span> <span class="kw">c</span>(r1, r2, c1, c2))
+        } else if (xy.ext) {
+            x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">xy =</span> <span class="kw">c</span>(xs, ys))
+        }
+    }
+    <span class="kw">return</span>(x)
+}</code></pre>
+</div>
 <div id="processing-function" class="section level4">
 <h4>Processing function</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Processing function</span>
+f &lt;-<span class="st"> </span>function(j, i, <span class="dt">par.by.month =</span> <span class="ot">FALSE</span>, anomDir, outDir, b.clim.t, b.clim.p, 
+    <span class="dt">method =</span> <span class="st">&quot;akima&quot;</span>) {
+    if (par.by.month) {
+        mo &lt;-<span class="st"> </span>j
+        jj &lt;-<span class="st"> </span>j &lt;-<span class="st"> </span><span class="dv">1</span>
+    } else {
+        mo &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">12</span>
+        jj &lt;-<span class="st"> </span><span class="kw">length</span>(models)
+    }
+    for (k in mo) {
+        r.clim.t &lt;-<span class="st"> </span><span class="kw">subset</span>(b.clim.t, k)
+        r.clim.p &lt;-<span class="st"> </span><span class="kw">subset</span>(b.clim.p, k)
+        <span class="co"># Read temp and precip (two) annual time series multiband tif files for</span>
+        <span class="co"># given anomalies directory, model, and month</span>
+        pat.t &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^tas.*._&quot;</span>, mos[k], <span class="st">&quot;_.*.tif$&quot;</span>)
+        pat.p &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^pr.*._&quot;</span>, mos[k], <span class="st">&quot;_.*.tif$&quot;</span>)
+        file.t &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">file.path</span>(anomDir[i], models[j]), <span class="dt">pattern =</span> pat.t, 
+            <span class="dt">full =</span> T)
+        file.p &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">file.path</span>(anomDir[i], models[j]), <span class="dt">pattern =</span> pat.p, 
+            <span class="dt">full =</span> T)
+        isCRU &lt;-<span class="st"> </span><span class="kw">substr</span>(models[j], <span class="dv">1</span>, <span class="dv">3</span>) ==<span class="st"> &quot;CRU&quot;</span>
+        file.year.ind &lt;-<span class="st"> </span>if (isCRU) 
+            <span class="dv">7</span>:<span class="dv">8</span> else <span class="dv">9</span>:<span class="dv">10</span>
+        yrs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(file.t), <span class="st">&quot;_&quot;</span>))[file.year.ind], 
+            <span class="dv">1</span>, <span class="dv">4</span>))
+        yrs &lt;-<span class="st"> </span><span class="kw">seq</span>(yrs[<span class="dv">1</span>], yrs[<span class="dv">2</span>])
+        <span class="kw">dir.create</span>(outDir.t &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;//&quot;</span>, <span class="st">&quot;/&quot;</span>, <span class="kw">file.path</span>(outDir, period.scenario[<span class="dv">1</span>], 
+            grp2, period.scenario[<span class="dv">2</span>], models[j], <span class="st">&quot;tas&quot;</span>)), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
+        <span class="kw">dir.create</span>(outDir.p &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;//&quot;</span>, <span class="st">&quot;/&quot;</span>, <span class="kw">file.path</span>(outDir, period.scenario[<span class="dv">1</span>], 
+            grp2, period.scenario[<span class="dv">2</span>], models[j], <span class="st">&quot;pr&quot;</span>)), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
+        
+        b.anom.t &lt;-<span class="st"> </span><span class="kw">brick</span>(file.t)
+        b.anom.p &lt;-<span class="st"> </span><span class="kw">brick</span>(file.p)
+        if (<span class="kw">xmin</span>(b.anom.t) &lt;<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span><span class="kw">xmax</span>(b.anom.t) &lt;<span class="st"> </span><span class="dv">360</span>) 
+            b.anom.t &lt;-<span class="st"> </span><span class="kw">extend</span>(b.anom.t, <span class="kw">c</span>(<span class="kw">xmin</span>(b.anom.t), <span class="kw">xmax</span>(b.anom.t) +<span class="st"> </span>
+<span class="st">                </span><span class="kw">res</span>(b.anom.t)[<span class="dv">1</span>], <span class="kw">ymin</span>(b.anom.t), <span class="kw">ymax</span>(b.anom.t)))  <span class="co"># slight adjustments for some files to avoid erroneous regions of NAs following interpolation</span>
+        if (<span class="kw">xmin</span>(b.anom.t) &gt;<span class="st"> </span><span class="dv">0</span> |<span class="st"> </span><span class="kw">xmax</span>(b.anom.t) &lt;<span class="st"> </span><span class="dv">360</span>) 
+            <span class="kw">stop</span>(<span class="st">&quot;Source raster brick files require direct investigation of extent values.&quot;</span>)
+        if (<span class="kw">xmin</span>(b.anom.p) &lt;<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span><span class="kw">xmax</span>(b.anom.p) &lt;<span class="st"> </span><span class="dv">360</span>) 
+            b.anom.p &lt;-<span class="st"> </span><span class="kw">extend</span>(b.anom.p, <span class="kw">c</span>(<span class="kw">xmin</span>(b.anom.p), <span class="kw">xmax</span>(b.anom.p) +<span class="st"> </span>
+<span class="st">                </span><span class="kw">res</span>(b.anom.p)[<span class="dv">1</span>], <span class="kw">ymin</span>(b.anom.p), <span class="kw">ymax</span>(b.anom.p)))  <span class="co"># slight adjustments for some files to avoid erroneous regions of NAs following interpolation</span>
+        if (<span class="kw">xmin</span>(b.anom.p) &gt;<span class="st"> </span><span class="dv">0</span> |<span class="st"> </span><span class="kw">xmax</span>(b.anom.p) &lt;<span class="st"> </span><span class="dv">360</span>) 
+            <span class="kw">stop</span>(<span class="st">&quot;Source raster brick files require direct investigation of extent values.&quot;</span>)
+        ext &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">c</span>(<span class="kw">xmin</span>(b.anom.t), <span class="kw">xmax</span>(b.anom.t), <span class="dv">45</span>, <span class="dv">76</span>))  <span class="co"># Bigger than PRISM WGS84 bounding box by at least half a degree on all sides</span>
+        nc &lt;-<span class="st"> </span><span class="kw">ncol</span>(b.anom.t)
+        if (<span class="kw">xmin</span>(b.anom.t) &lt;<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span><span class="kw">all</span>(<span class="kw">is.na</span>(b.anom.t[nc]))) {
+            for (h in <span class="dv">1</span>:<span class="kw">nlayers</span>(b.anom.t)) {
+                r.anom.t &lt;-<span class="st"> </span><span class="kw">subset</span>(b.anom.t, h)
+                r.anom.p &lt;-<span class="st"> </span><span class="kw">subset</span>(b.anom.p, h)
+                r.anom.t[, nc] &lt;-<span class="st"> </span>r.anom.t[, <span class="dv">1</span>]  <span class="co"># Last row is the same as first row</span>
+                r.anom.p[, nc] &lt;-<span class="st"> </span>r.anom.p[, <span class="dv">1</span>]
+                b.anom.t &lt;-<span class="st"> </span><span class="kw">setValues</span>(b.anom.t, r.anom.t[], <span class="dt">layer =</span> h)
+                b.anom.p &lt;-<span class="st"> </span><span class="kw">setValues</span>(b.anom.p, r.anom.p[], <span class="dt">layer =</span> h)
+                <span class="kw">print</span>(h)
+            }
+        }
+        b.anom.t &lt;-<span class="st"> </span><span class="kw">rotate</span>(<span class="kw">crop</span>(b.anom.t, ext))
+        b.anom.p &lt;-<span class="st"> </span><span class="kw">rotate</span>(<span class="kw">crop</span>(b.anom.p, ext))
+        <span class="kw">projection</span>(b.anom.t) &lt;-<span class="st"> </span><span class="kw">projection</span>(b.anom.p) &lt;-<span class="st"> &quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0&quot;</span>
+        <span class="kw">gc</span>()
+        <span class="kw">print</span>(<span class="st">&quot;Bricks loaded. Commence downscaling.&quot;</span>)
+        
+        if (method ==<span class="st"> &quot;akima&quot;</span>) {
+            <span class="kw">require</span>(<span class="st">&quot;akima&quot;</span>)
+            proj4.out &lt;-<span class="st"> </span><span class="kw">projection</span>(r.clim.p)
+            nr &lt;-<span class="st"> </span><span class="kw">nrow</span>(r.clim.t)
+            nc &lt;-<span class="st"> </span><span class="kw">ncol</span>(r.clim.t)
+            cres &lt;-<span class="st"> </span><span class="fl">0.5</span> *<span class="st"> </span><span class="kw">res</span>(r.clim.t)
+            xmn &lt;-<span class="st"> </span><span class="kw">xmin</span>(r.clim.t) +<span class="st"> </span>cres[<span class="dv">1</span>]
+            xmx &lt;-<span class="st"> </span><span class="kw">xmax</span>(r.clim.t) -<span class="st"> </span>cres[<span class="dv">1</span>]
+            ymn &lt;-<span class="st"> </span><span class="kw">ymin</span>(r.clim.t) +<span class="st"> </span>cres[<span class="dv">2</span>]
+            ymx &lt;-<span class="st"> </span><span class="kw">ymax</span>(r.clim.t) -<span class="st"> </span>cres[<span class="dv">2</span>]
+            x.out &lt;-<span class="st"> </span><span class="kw">seq</span>(xmn, xmx, <span class="dt">l =</span> nc)
+            y.out &lt;-<span class="st"> </span><span class="kw">seq</span>(ymn, ymx, <span class="dt">l =</span> nr)
+            m.clim.p &lt;-<span class="st"> </span><span class="kw">trim2</span>(r.clim.p, <span class="dt">rc.ind =</span> T, <span class="dt">xy.ext =</span> T)
+            rc.ind &lt;-<span class="st"> </span>m.clim.p[[<span class="dv">2</span>]]
+            xy.ext &lt;-<span class="st"> </span>m.clim.p[[<span class="dv">3</span>]]
+            xmn &lt;-<span class="st"> </span>xy.ext[<span class="dv">1</span>]
+            xmx &lt;-<span class="st"> </span>xy.ext[<span class="dv">2</span>]
+            ymn &lt;-<span class="st"> </span>xy.ext[<span class="dv">3</span>]
+            ymx &lt;-<span class="st"> </span>xy.ext[<span class="dv">4</span>]
+            m.clim.p &lt;-<span class="st"> </span>m.clim.p[[<span class="dv">1</span>]]
+            m.clim.t &lt;-<span class="st"> </span><span class="kw">trim2</span>(r.clim.t)
+            
+            for (h in <span class="dv">1</span>:<span class="kw">nlayers</span>(b.anom.t)) {
+                r.anom.t &lt;-<span class="st"> </span><span class="kw">subset</span>(b.anom.t, h)
+                r.anom.p &lt;-<span class="st"> </span><span class="kw">subset</span>(b.anom.p, h)
+                v.t &lt;-<span class="st"> </span><span class="kw">getValues</span>(r.anom.t)
+                v.p &lt;-<span class="st"> </span><span class="kw">getValues</span>(r.anom.p)
+                if (h ==<span class="st"> </span><span class="dv">1</span>) {
+                  xy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">xyFromCell</span>(r.anom.p, <span class="dv">1</span>:<span class="kw">ncell</span>(r.anom.p)))
+                  <span class="kw">coordinates</span>(xy) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>)
+                  <span class="kw">proj4string</span>(xy) &lt;-<span class="st"> </span><span class="kw">projection</span>(r.anom.p)
+                  xy &lt;-<span class="st"> </span><span class="kw">coordinates</span>(<span class="kw">spTransform</span>(xy, <span class="dt">CRS =</span> <span class="kw">CRS</span>(proj4.out)))
+                  bb &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">bbox</span>(r.clim.t) *<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="fl">1.1</span>, <span class="fl">0.9</span>, <span class="fl">1.1</span>, 
+                    <span class="fl">1.1</span>), <span class="dv">2</span>, <span class="dv">2</span>))
+                  e &lt;-<span class="st"> </span><span class="dv">120000</span>  <span class="co"># extend all sides by 120 km</span>
+                  ind1 &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">point.in.polygon</span>(xy[, <span class="dv">1</span>], xy[, <span class="dv">2</span>], <span class="kw">c</span>(xmn -<span class="st"> </span>e, 
+                    xmx +<span class="st"> </span>e, xmx +<span class="st"> </span>e, xmn -<span class="st"> </span>e), <span class="kw">c</span>(ymn -<span class="st"> </span>e, ymn +<span class="st"> </span>e, ymx +<span class="st"> </span>e, 
+                    ymx -<span class="st"> </span>e)) &gt;<span class="st"> </span><span class="dv">0</span>)
+                }
+                ind &lt;-<span class="st"> </span>ind1
+                z.t &lt;-<span class="st"> </span>v.t[ind]
+                z.p &lt;-<span class="st"> </span>v.p[ind]
+                if (<span class="kw">any</span>(<span class="kw">is.na</span>(z.p))) 
+                  ind &lt;-<span class="st"> </span>ind[!<span class="kw">is.na</span>(z.p)]
+                x &lt;-<span class="st"> </span>xy[ind, <span class="dv">1</span>]
+                y &lt;-<span class="st"> </span>xy[ind, <span class="dv">2</span>]
+                z.t &lt;-<span class="st"> </span>v.t[ind]
+                z.p &lt;-<span class="st"> </span>v.p[ind]
+                spl.t &lt;-<span class="st"> </span><span class="kw">interp</span>(x, y, z.t, <span class="dt">xo =</span> x.out, <span class="dt">yo =</span> y.out, <span class="dt">linear =</span> T)
+                spl.p &lt;-<span class="st"> </span><span class="kw">interp</span>(x, y, z.p, <span class="dt">xo =</span> x.out, <span class="dt">yo =</span> y.out, <span class="dt">linear =</span> T)
+                mat.t &lt;-<span class="st"> </span><span class="kw">t</span>(spl.t$z)[nr:<span class="dv">1</span>, ]
+                mat.p &lt;-<span class="st"> </span><span class="kw">t</span>(spl.p$z)[nr:<span class="dv">1</span>, ]
+                if (<span class="kw">exists</span>(<span class="st">&quot;rc.ind&quot;</span>)) {
+                  mat.t &lt;-<span class="st"> </span>mat.t[rc.ind[<span class="dv">1</span>]:rc.ind[<span class="dv">2</span>], rc.ind[<span class="dv">3</span>]:rc.ind[<span class="dv">4</span>]]
+                  mat.p &lt;-<span class="st"> </span>mat.p[rc.ind[<span class="dv">1</span>]:rc.ind[<span class="dv">2</span>], rc.ind[<span class="dv">3</span>]:rc.ind[<span class="dv">4</span>]]
+                }
+                r.new.t &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">round</span>(mat.t +<span class="st"> </span>m.clim.t, <span class="dv">1</span>), <span class="dt">xmn =</span> xmn, <span class="dt">xmx =</span> xmx, 
+                  <span class="dt">ymn =</span> ymn, <span class="dt">ymx =</span> ymx, <span class="dt">crs =</span> proj4.out)
+                r.new.p &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">round</span>(mat.p *<span class="st"> </span>m.clim.p), <span class="dt">xmn =</span> xmn, <span class="dt">xmx =</span> xmx, 
+                  <span class="dt">ymn =</span> ymn, <span class="dt">ymx =</span> ymx, <span class="dt">crs =</span> proj4.out)
+                <span class="kw">names</span>(r.new.t) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;tas_mean_C&quot;</span>, grp, models[j], scenario, 
+                  mos[k], yrs[h], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+                <span class="kw">names</span>(r.new.p) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;pr_total_mm&quot;</span>, grp, models[j], scenario, 
+                  mos[k], yrs[h], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+                if (isCRU) {
+                  <span class="kw">names</span>(r.new.t) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;CRU_CRU_&quot;</span>, <span class="st">&quot;CRU_&quot;</span>, <span class="kw">names</span>(r.new.t))
+                  <span class="kw">names</span>(r.new.p) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;CRU_CRU_&quot;</span>, <span class="st">&quot;CRU_&quot;</span>, <span class="kw">names</span>(r.new.p))
+                }
+                <span class="kw">writeRaster</span>(r.new.t, <span class="kw">paste0</span>(outDir.t, <span class="st">&quot;/&quot;</span>, <span class="kw">names</span>(r.new.t), <span class="st">&quot;.tif&quot;</span>), 
+                  <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">options =</span> <span class="st">&quot;COMPRESS=LZW&quot;</span>, <span class="dt">overwrite =</span> T)
+                <span class="kw">writeRaster</span>(r.new.p, <span class="kw">paste0</span>(outDir.p, <span class="st">&quot;/&quot;</span>, <span class="kw">names</span>(r.new.p), <span class="st">&quot;.tif&quot;</span>), 
+                  <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">options =</span> <span class="st">&quot;COMPRESS=LZW&quot;</span>, <span class="dt">overwrite =</span> T)
+                <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;######## Model&quot;</span>, j, <span class="st">&quot;of&quot;</span>, jj, <span class="st">&quot;| Month&quot;</span>, k, <span class="st">&quot;of 12 | Year&quot;</span>, 
+                  h, <span class="st">&quot;of&quot;</span>, <span class="kw">nlayers</span>(b.anom.t), <span class="st">&quot;########&quot;</span>))
+            }
+            
+        } else if (method ==<span class="st"> &quot;gdal&quot;</span>) {
+            <span class="co"># GDAL cannot process such a large chunk of data at once, use akima method</span>
+            <span class="co"># for PRISM 2-km (or 771-m) downscaling</span>
+            t.on &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
+            b.new.t &lt;-<span class="st"> </span><span class="kw">projectRaster</span>(b.anom.t, r.clim.t)
+            <span class="kw">rm</span>(b.anom.t)
+            <span class="kw">gc</span>()
+            <span class="kw">print</span>(<span class="st">&quot;Brick projected&quot;</span>)
+            b.new.t &lt;-<span class="st"> </span><span class="kw">mask</span>(b.new.t, r.clim.t)
+            <span class="kw">gc</span>()
+            <span class="kw">print</span>(<span class="st">&quot;Brick masked&quot;</span>)
+            b.new.t &lt;-<span class="st"> </span><span class="kw">round</span>(b.new.t +<span class="st"> </span>r.clim.t, <span class="dv">1</span>)
+            <span class="co"># assign(paste0(&#39;b.t.&#39;, k), b.new.t, pos=1) rm(b.new.t)</span>
+            <span class="kw">gc</span>()
+            <span class="kw">print</span>(<span class="st">&quot;Done with temperature downscaling&quot;</span>)
+            t.off &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
+            <span class="kw">print</span>(<span class="kw">difftime</span>(t.off, t.on))
+            t.on &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
+            
+            isCRU &lt;-<span class="st"> </span><span class="kw">substr</span>(models[j], <span class="dv">1</span>, <span class="dv">3</span>) ==<span class="st"> &quot;CRU&quot;</span>
+            file.year.ind &lt;-<span class="st"> </span>if (isCRU) 
+                <span class="dv">7</span>:<span class="dv">8</span> else <span class="dv">9</span>:<span class="dv">10</span>
+            yrs &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(file.t), <span class="st">&quot;_&quot;</span>))[file.year.ind], 
+                <span class="dv">1</span>, <span class="dv">4</span>))
+            yrs &lt;-<span class="st"> </span><span class="kw">seq</span>(yrs[<span class="dv">1</span>], yrs[<span class="dv">2</span>])
+            <span class="kw">dir.create</span>(outDir.t &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;//&quot;</span>, <span class="st">&quot;/&quot;</span>, <span class="kw">file.path</span>(outDir, period.scenario[<span class="dv">1</span>], 
+                grp2, period.scenario[<span class="dv">2</span>], models[j], <span class="st">&quot;tas&quot;</span>)), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
+            <span class="kw">dir.create</span>(outDir.p &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;//&quot;</span>, <span class="st">&quot;/&quot;</span>, <span class="kw">file.path</span>(outDir, period.scenario[<span class="dv">1</span>], 
+                grp2, period.scenario[<span class="dv">2</span>], models[j], <span class="st">&quot;pr&quot;</span>)), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
+            
+            <span class="co"># b.new.t &lt;- get(paste0(&#39;b.t.&#39;, k), envir=.GlobalEnv)</span>
+            nc &lt;-<span class="st"> </span><span class="kw">ncol</span>(b.new.t)
+            for (h in <span class="dv">1</span>:<span class="kw">nlayers</span>(b.new.t)) {
+                <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;h =&quot;</span>, h))
+                r.new.t &lt;-<span class="st"> </span><span class="kw">subset</span>(b.new.t, h)
+                <span class="kw">print</span>(r.new.t)
+                <span class="kw">names</span>(r.new.t) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;tas_mean_C&quot;</span>, grp, models[j], scenario, 
+                  mos[k], yrs[h], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+                if (isCRU) 
+                  <span class="kw">names</span>(r.new.t) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;CRU_CRU_&quot;</span>, <span class="st">&quot;CRU_&quot;</span>, <span class="kw">names</span>(r.new.t))
+                <span class="kw">writeRaster</span>(r.new.t, <span class="kw">paste0</span>(outDir.t, <span class="st">&quot;/&quot;</span>, <span class="kw">names</span>(r.new.t), <span class="st">&quot;.tif&quot;</span>), 
+                  <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">options =</span> <span class="st">&quot;COMPRESS=LZW&quot;</span>, <span class="dt">overwrite =</span> T)
+                <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;######## Model&quot;</span>, j, <span class="st">&quot;of&quot;</span>, jj, <span class="st">&quot;| Month&quot;</span>, k, <span class="st">&quot;of 12 | Year&quot;</span>, 
+                  h, <span class="st">&quot;of&quot;</span>, <span class="kw">nlayers</span>(b.new.t), <span class="st">&quot;########&quot;</span>))
+            }
+            <span class="kw">rm</span>(b.new.t)
+            <span class="kw">gc</span>()
+            
+            b.new.p &lt;-<span class="st"> </span><span class="kw">projectRaster</span>(b.anom.p, r.clim.p)
+            <span class="kw">rm</span>(b.anom.p)
+            <span class="kw">gc</span>()
+            b.new.p &lt;-<span class="st"> </span><span class="kw">mask</span>(b.new.p, r.clim.p)
+            <span class="kw">gc</span>()
+            b.new.p &lt;-<span class="st"> </span><span class="kw">round</span>(b.new.p *<span class="st"> </span>r.clim.p)
+            <span class="co"># assign(paste0(&#39;b.p.&#39;, k), b.new.p, pos=1) rm(b.new.p)</span>
+            <span class="kw">gc</span>()
+            <span class="kw">print</span>(<span class="st">&quot;Done with precipitation downscaling&quot;</span>)
+            t.off &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
+            <span class="kw">print</span>(<span class="kw">difftime</span>(t.off, t.on))
+            
+            <span class="co"># b.new.p &lt;- get(paste0(&#39;b.p.&#39;, k), envir=.GlobalEnv)</span>
+            for (h in <span class="dv">1</span>:<span class="kw">nlayers</span>(b.new.p)) {
+                r.new.p &lt;-<span class="st"> </span><span class="kw">subset</span>(b.new.p, h)
+                <span class="kw">names</span>(r.new.p) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;pr_total_mm&quot;</span>, grp, models[j], scenario, 
+                  mos[k], yrs[h], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+                if (isCRU) 
+                  <span class="kw">names</span>(r.new.p) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;CRU_CRU_&quot;</span>, <span class="st">&quot;CRU_&quot;</span>, <span class="kw">names</span>(r.new.p))
+                <span class="kw">writeRaster</span>(r.new.p, <span class="kw">paste0</span>(outDir.p, <span class="st">&quot;/&quot;</span>, <span class="kw">names</span>(r.new.p), <span class="st">&quot;.tif&quot;</span>), 
+                  <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">options =</span> <span class="st">&quot;COMPRESS=LZW&quot;</span>, <span class="dt">overwrite =</span> T)
+                <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;######## Model&quot;</span>, j, <span class="st">&quot;of&quot;</span>, jj, <span class="st">&quot;| Month&quot;</span>, k, <span class="st">&quot;of 12 | Year&quot;</span>, 
+                  h, <span class="st">&quot;of&quot;</span>, <span class="kw">nlayers</span>(b.new.p), <span class="st">&quot;########&quot;</span>))
+            }
+            <span class="kw">rm</span>(b.new.p)
+            <span class="kw">gc</span>()
+        }
+        
+    }
+    <span class="kw">return</span>()
+}</code></pre>
 </div>
 <div id="run-downscaling" class="section level4">
 <h4>Run downscaling</h4>
