@@ -293,17 +293,6 @@ f <- function(j, i, par.by.month = FALSE, anomDir, outDir, b.clim.t, b.clim.p,
             print(difftime(t.off, t.on))
             t.on <- Sys.time()
             
-            isCRU <- substr(models[j], 1, 3) == "CRU"
-            file.year.ind <- if (isCRU) 
-                7:8 else 9:10
-            yrs <- as.numeric(substr(unlist(strsplit(basename(file.t), "_"))[file.year.ind], 
-                1, 4))
-            yrs <- seq(yrs[1], yrs[2])
-            dir.create(outDir.t <- gsub("//", "/", file.path(outDir, period.scenario[1], 
-                grp2, period.scenario[2], models[j], "tas")), recur = T, showWarnings = F)
-            dir.create(outDir.p <- gsub("//", "/", file.path(outDir, period.scenario[1], 
-                grp2, period.scenario[2], models[j], "pr")), recur = T, showWarnings = F)
-            
             # b.new.t <- get(paste0('b.t.', k), envir=.GlobalEnv)
             nc <- ncol(b.new.t)
             for (h in 1:nlayers(b.new.t)) {
