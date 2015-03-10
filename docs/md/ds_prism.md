@@ -22,7 +22,7 @@ The upside to this method, although slower even when functional, is that it allo
 in the sense that more people working with spatial data are familiar with the `raster` package, which handles the transformations, as opposed to the `akima` package.
 
 At this scale, however, `method='akima'` must be used, unless one wants to wait forever for serial processing of so many files using the `raster` package.
-Therefore, the methods used in this version of downscaling are not the same as those employed when downscaling some coarser climatologies.
+Therefore, the methods used in this version of downscaling are not the same as those employed when downscaling to some coarser climatologies.
 
 `ds_prism.R` is called with command line arguments by one of two SLURM scripts, `ds_prism_cru.slurm` or `ds_prism_gcm.slurm`.
 
