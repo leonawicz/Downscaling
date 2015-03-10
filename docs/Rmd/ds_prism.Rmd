@@ -44,9 +44,14 @@ Therefore, the methods used in this version of downscaling are not the same as t
 ```{r setup}
 ```
 
+#### Support function
+
+```{r func_trim2}
+```
+
 #### Processing function
 
-```{r function}
+```{r func_proc}
 ```
 
 #### Run downscaling
