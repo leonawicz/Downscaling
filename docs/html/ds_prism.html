@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; }
+code > span.dt { color: #dfdfbf; }
+code > span.dv { color: #dcdccc; }
+code > span.bn { color: #dca3a3; }
+code > span.fl { color: #c0bed1; }
+code > span.ch { color: #dca3a3; }
+code > span.st { color: #cc9393; }
+code > span.co { color: #7f9f7f; }
+code > span.ot { color: #efef8f; }
+code > span.al { color: #ffcfaf; }
+code > span.fu { color: #efef8f; }
+code > span.er { color: #c3bf9f; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Downscaling</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="climatologies" class="dropdown-toggle" data-toggle="dropdown">Climatologies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="climatologies.html">climatologies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="climPrep.html">climPrep.R</a></li>
+              <li><a href="climCalc.html">climCalc.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">CRU 2.0</li>
+              <li><a href="cru20prelimExtraction">cru20prelimExtraction.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="anomalies" class="dropdown-toggle" data-toggle="dropdown">Anomalies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="anomalies.html">anomalies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="anomPrep.html">anomPrep.R</a></li>
+              <li><a href="anomCalc.html">anomCalc.R</a></li>
+              <li><a href="anomCalcAsScript.html">anomCalcAsScript.R</a></li>
+              <li><a href="anomParSubFunc.html">anomParSubFunc.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="downscaling" class="dropdown-toggle" data-toggle="dropdown">Downscaling <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">2-km/771-m PRISM</li>
+              <li><a href="ds_prism.html">ds_prism.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">10-minute CRU 2.0</li>
+              <li><a href="ds_world10min.html">ds_world10min.R</a></li>
+            </ul>
+
+          <li><a href="http://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Downscaling">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="ds_prism.r" class="section level2">
+<h2>ds_prism.R</h2>
+<p>This script downscales monthly climate anomalies geotiffs to either of two sets of monthly PRISM climatologies, the 2-km resolution 1961-1990 climatologies or the 771-m 1971-2000 climatologies.</p>
+<p>Unlike the <code>climatologies.R</code> and <code>amomalies.R</code> which create their respective geotiffs for any of a number of different data sets, this downscaling script strictly performs downscaling to these PRISM climatologies over their respective spatial extents at the respective resolutions.</p>
+<p>Although the PRISM downscaling code below includes a <code>method</code> argument, which bifurcates the processing function into two methods of downscaling, only one method is functional when attempting to downscale such a large amount of data to such a fine spatial resolution at once using parallelized code.</p>
+<p>Using <code>method='gdal'</code> will tend to throw segmentation fault errors related to GDAL dataset copy failures on the Atlas cluster. As a result, the tried and true <code>method='akima'</code> must be used. The former approach is successfully used in the 10-minute resolution CRU 2.0 climatology downscaling, where GDAL does not choke on the smaller amount of data. The upside to this method, although slower even when functional, is that it allows for more familiar-looking code, in the sense that more people working with spatial data are familiar with the <code>raster</code> package, which handles the transformations, as opposed to the <code>akima</code> package.</p>
+<p>At this scale, however, <code>method='akima'</code> must be used, unless one wants to wait forever for serial processing of so many files using the <code>raster</code> package. Therefore, the methods used in this version of downscaling are not the same as those employed when downscaling some coarser climatologies.</p>
+<p><code>ds_prism.R</code> is called with command line arguments by one of two SLURM scripts, <code>ds_prism_cru.slurm</code> or <code>ds_prism_gcm.slurm</code>.</p>
+<div id="r-code" class="section level3">
+<h3>R code</h3>
+<div id="setup" class="section level4">
+<h4>Setup</h4>
+<pre class="sourceCode r"><code class="sourceCode r">comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
+if (!<span class="kw">length</span>(comargs)) <span class="kw">q</span>(<span class="st">&quot;no&quot;</span>) else for (z in <span class="dv">1</span>:<span class="kw">length</span>(comargs)) <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> comargs[[z]]))
+
+if (!<span class="kw">exists</span>(<span class="st">&quot;i&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Index variable &#39;i&#39; not passed at command line.&quot;</span>)
+if (!<span class="kw">exists</span>(<span class="st">&quot;domain&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Spatial domain variable &#39;domain&#39; not passed at command line.&quot;</span>)
+if (!(domain %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;akcan2km&quot;</span>, <span class="st">&quot;ak771m&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;Improper spatial domain specified.&quot;</span>)
+
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(parallel)
+
+<span class="co"># Part of GDAL test rasterOptions(maxmemory=1e+10, chunksize=2e+08) # 12</span>
+<span class="co"># simultaneous processes on one Atlas node</span>
+<span class="co"># rasterOptions(tmpdir=&#39;/big_scratch/mfleonawicz/tmp/&#39;)</span>
+<span class="co"># print(rasterOptions())</span>
+
+if (domain ==<span class="st"> &quot;akcan2km&quot;</span>) climDir &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;/Data/Base_Data/Climate/AK_CAN_2km/historical/singleBand/prism/AK_CAN_2km_PRISM/AK_CAN_geotiffs/&quot;</span>, 
+    <span class="kw">c</span>(<span class="st">&quot;pr&quot;</span>, <span class="st">&quot;tas&quot;</span>), <span class="st">&quot;/ak83albers&quot;</span>)
+if (domain ==<span class="st"> &quot;ak771m&quot;</span>) climDir &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;/Data/Base_Data/Climate/AK_800m/historical/singleBand/prism/AK_800m_PRISM/geotiffs/&quot;</span>, 
+    <span class="kw">c</span>(<span class="st">&quot;pr&quot;</span>, <span class="st">&quot;tas&quot;</span>))
+b.clim.p &lt;-<span class="st"> </span><span class="kw">readAll</span>(<span class="kw">stack</span>(<span class="kw">list.files</span>(climDir[<span class="dv">1</span>], <span class="dt">full =</span> <span class="ot">TRUE</span>, <span class="dt">pattern =</span> <span class="st">&quot;.tif$&quot;</span>)))
+b.clim.t &lt;-<span class="st"> </span><span class="kw">readAll</span>(<span class="kw">stack</span>(<span class="kw">list.files</span>(climDir[<span class="dv">2</span>], <span class="dt">full =</span> <span class="ot">TRUE</span>, <span class="dt">pattern =</span> <span class="st">&quot;.tif$&quot;</span>)))
+
+anomDir &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;/Data/Base_Data/Climate/World/Anomalies/1961_1990_Base_Climatology&quot;</span>, 
+    <span class="dt">full =</span> T)
+allowed.models &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cccma-cgcm3-1-t47&quot;</span>, <span class="st">&quot;gfdl-cm2-1&quot;</span>, <span class="st">&quot;miroc3-2-medres&quot;</span>, <span class="st">&quot;mpi-echam5&quot;</span>, 
+    <span class="st">&quot;ukmo-hadcm3&quot;</span>, <span class="st">&quot;CCSM4&quot;</span>, <span class="st">&quot;GFDL-CM3&quot;</span>, <span class="st">&quot;GISS-E2-R&quot;</span>, <span class="st">&quot;IPSL-CM5A-LR&quot;</span>, <span class="st">&quot;MRI-CGCM3&quot;</span>, 
+    <span class="st">&quot;CRU_TS30&quot;</span>, <span class="st">&quot;CRU_TS31&quot;</span>, <span class="st">&quot;CRU_TS32&quot;</span>)
+
+outDir &lt;-<span class="st"> </span>if (domain ==<span class="st"> &quot;akcan2km&quot;</span>) <span class="st">&quot;/Data/Base_Data/Climate/AK_CAN_2km&quot;</span> else <span class="st">&quot;/Data/Base_Data/Climate/AK_800m&quot;</span>
+
+if (i &gt;<span class="st"> </span><span class="kw">length</span>(anomDir)) <span class="kw">stop</span>(<span class="st">&quot;Index variable &#39;i&#39; exceeds maximum value.&quot;</span>)
+
+mos &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">paste0</span>(<span class="dv">0</span>, <span class="dv">1</span>:<span class="dv">9</span>), <span class="dv">10</span>:<span class="dv">12</span>)
+meta &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(anomDir[i]), <span class="st">&quot;_&quot;</span>))
+grp &lt;-<span class="st"> </span>meta[<span class="dv">1</span>]
+grp2 &lt;-<span class="st"> </span>if (grp ==<span class="st"> &quot;AR4&quot;</span>) <span class="st">&quot;AR4_CMIP3_models&quot;</span> else if (grp ==<span class="st"> &quot;AR5&quot;</span>) <span class="st">&quot;AR5_CMIP5_models&quot;</span> else grp
+scenario &lt;-<span class="st"> </span>meta[<span class="dv">4</span>]
+period.scenario &lt;-<span class="st"> </span>if (scenario ==<span class="st"> &quot;historical&quot;</span>) <span class="kw">c</span>(scenario, <span class="st">&quot;&quot;</span>) else <span class="kw">c</span>(<span class="st">&quot;projected&quot;</span>, 
+    scenario)
+<span class="co"># period.scenario &lt;- if(scenario==&#39;historical&#39;) c(file.path(scenario,</span>
+<span class="co"># &#39;singleBand&#39;), &#39;&#39;) else c(&#39;projected&#39;, scenario)</span>
+models &lt;-<span class="st"> </span><span class="kw">list.files</span>(anomDir[i])
+models &lt;-<span class="st"> </span>models[models %in%<span class="st"> </span>allowed.models]</code></pre>
+</div>
+<div id="processing-function" class="section level4">
+<h4>Processing function</h4>
+</div>
+<div id="run-downscaling" class="section level4">
+<h4>Run downscaling</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run</span>
+if (<span class="kw">exists</span>(<span class="st">&quot;month.index&quot;</span>) &amp;&amp;<span class="st"> </span><span class="kw">all</span>(<span class="dv">1</span>:<span class="dv">12</span> %in%<span class="st"> </span>month.index)) {
+    <span class="kw">mclapply</span>(month.index, f, <span class="dt">i =</span> i, <span class="dt">par.by.month =</span> <span class="ot">TRUE</span>, <span class="dt">anomDir =</span> anomDir, 
+        <span class="dt">outDir =</span> outDir, <span class="dt">b.clim.t =</span> b.clim.t, <span class="dt">b.clim.p =</span> b.clim.p, <span class="dt">method =</span> <span class="st">&quot;akima&quot;</span>, 
+        <span class="dt">mc.cores =</span> <span class="kw">length</span>(month.index))
+} else <span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(models), f, <span class="dt">i =</span> i, <span class="dt">anomDir =</span> anomDir, <span class="dt">outDir =</span> outDir, 
+    <span class="dt">b.clim.t =</span> b.clim.t, <span class="dt">b.clim.p =</span> b.clim.p, <span class="dt">method =</span> <span class="st">&quot;akima&quot;</span>, <span class="dt">mc.cores =</span> <span class="kw">min</span>(<span class="kw">length</span>(models), 
+        <span class="dv">32</span>))</code></pre>
+</div>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

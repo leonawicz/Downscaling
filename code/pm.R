@@ -37,7 +37,7 @@ proj.submenu <- list(
 	c("empty"),
 	c("Main script", "climatologies.R", "divider", "Functions", "climPrep.R", "climCalc.R", "divider", "CRU 2.0", "cru20prelimExtraction.R"),
 	c("Main script", "anomalies.R", "divider", "Functions", "anomPrep.R", "anomCalc.R", "anomCalcAsScript.R", "anomParSubFunc.R"),
-	c("10-minute CRU 2.0", "ds_world10min.R"),
+	c("2-km/771-m PRISM", "ds_prism.R", "divider", "10-minute CRU 2.0", "ds_world10min.R"),
 	c("empty")
 )
 
@@ -45,7 +45,7 @@ proj.files <- list(
 	c("index.html"),
 	c("header", "climatologies.html", "divider", "header", "climPrep.html", "climCalc.html", "divider", "header", "cru20prelimExtraction"),
 	c("header", "anomalies.html", "divider", "header", "anomPrep.html", "anomCalc.html", "anomCalcAsScript.html", "anomParSubFunc.html"),
-	c("header", "ds_world10min.html"),
+	c("header", "ds_prism.html", "divider", "header", "ds_world10min.html"),
 	c("http://leonawicz.github.io")
 )
 
