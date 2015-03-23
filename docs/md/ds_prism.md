@@ -179,7 +179,7 @@ f <- function(j, i, par.by.month = FALSE, anomDir, outDir, b.clim.t, b.clim.p,
                 res(b.anom.p)[1], ymin(b.anom.p), ymax(b.anom.p)))  # slight adjustments for some files to avoid erroneous regions of NAs following interpolation
         if (xmin(b.anom.p) > 0 | xmax(b.anom.p) < 360) 
             stop("Source raster brick files require direct investigation of extent values.")
-        ext <- extent(c(xmin(b.anom.t), xmax(b.anom.t), 45, 76))  # Bigger than PRISM WGS84 bounding box by at least half a degree on all sides
+        ext <- extent(c(xmin(b.anom.t), xmax(b.anom.t), 40, 80))  # Bigger than PRISM WGS84 bounding box on all sides
         nc <- ncol(b.anom.t)
         if (xmin(b.anom.t) < 0 & all(is.na(b.anom.t[nc]))) {
             for (h in 1:nlayers(b.anom.t)) {
@@ -232,10 +232,10 @@ f <- function(j, i, par.by.month = FALSE, anomDir, outDir, b.clim.t, b.clim.p,
                   xy <- coordinates(spTransform(xy, CRS = CRS(proj4.out)))
                   bb <- as.numeric(bbox(r.clim.t) * matrix(c(1.1, 0.9, 1.1, 
                     1.1), 2, 2))
-                  e <- 120000  # extend all sides by 120 km
+                  e <- 2e+05  # extend all sides by 200 km
                   ind1 <- which(point.in.polygon(xy[, 1], xy[, 2], c(xmn - e, 
-                    xmx + e, xmx + e, xmn - e), c(ymn - e, ymn + e, ymx + e, 
-                    ymx - e)) > 0)
+                    xmx + e, xmx + e, xmn - e, xmn - e), c(ymn - e, ymn - e, 
+                    ymx + e, ymx + e, ymn - e)) > 0)
                 }
                 ind <- ind1
                 z.t <- v.t[ind]

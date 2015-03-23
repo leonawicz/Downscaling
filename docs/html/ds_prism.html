@@ -331,7 +331,7 @@ f &lt;-<span class="st"> </span>function(j, i, <span class="dt">par.by.month =</
 <span class="st">                </span><span class="kw">res</span>(b.anom.p)[<span class="dv">1</span>], <span class="kw">ymin</span>(b.anom.p), <span class="kw">ymax</span>(b.anom.p)))  <span class="co"># slight adjustments for some files to avoid erroneous regions of NAs following interpolation</span>
         if (<span class="kw">xmin</span>(b.anom.p) &gt;<span class="st"> </span><span class="dv">0</span> |<span class="st"> </span><span class="kw">xmax</span>(b.anom.p) &lt;<span class="st"> </span><span class="dv">360</span>) 
             <span class="kw">stop</span>(<span class="st">&quot;Source raster brick files require direct investigation of extent values.&quot;</span>)
-        ext &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">c</span>(<span class="kw">xmin</span>(b.anom.t), <span class="kw">xmax</span>(b.anom.t), <span class="dv">45</span>, <span class="dv">76</span>))  <span class="co"># Bigger than PRISM WGS84 bounding box by at least half a degree on all sides</span>
+        ext &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">c</span>(<span class="kw">xmin</span>(b.anom.t), <span class="kw">xmax</span>(b.anom.t), <span class="dv">40</span>, <span class="dv">80</span>))  <span class="co"># Bigger than PRISM WGS84 bounding box on all sides</span>
         nc &lt;-<span class="st"> </span><span class="kw">ncol</span>(b.anom.t)
         if (<span class="kw">xmin</span>(b.anom.t) &lt;<span class="st"> </span><span class="dv">0</span> &amp;<span class="st"> </span><span class="kw">all</span>(<span class="kw">is.na</span>(b.anom.t[nc]))) {
             for (h in <span class="dv">1</span>:<span class="kw">nlayers</span>(b.anom.t)) {
@@ -384,10 +384,10 @@ f &lt;-<span class="st"> </span>function(j, i, <span class="dt">par.by.month =</
                   xy &lt;-<span class="st"> </span><span class="kw">coordinates</span>(<span class="kw">spTransform</span>(xy, <span class="dt">CRS =</span> <span class="kw">CRS</span>(proj4.out)))
                   bb &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">bbox</span>(r.clim.t) *<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="fl">1.1</span>, <span class="fl">0.9</span>, <span class="fl">1.1</span>, 
                     <span class="fl">1.1</span>), <span class="dv">2</span>, <span class="dv">2</span>))
-                  e &lt;-<span class="st"> </span><span class="dv">120000</span>  <span class="co"># extend all sides by 120 km</span>
+                  e &lt;-<span class="st"> </span><span class="fl">2e+05</span>  <span class="co"># extend all sides by 200 km</span>
                   ind1 &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">point.in.polygon</span>(xy[, <span class="dv">1</span>], xy[, <span class="dv">2</span>], <span class="kw">c</span>(xmn -<span class="st"> </span>e, 
-                    xmx +<span class="st"> </span>e, xmx +<span class="st"> </span>e, xmn -<span class="st"> </span>e), <span class="kw">c</span>(ymn -<span class="st"> </span>e, ymn +<span class="st"> </span>e, ymx +<span class="st"> </span>e, 
-                    ymx -<span class="st"> </span>e)) &gt;<span class="st"> </span><span class="dv">0</span>)
+                    xmx +<span class="st"> </span>e, xmx +<span class="st"> </span>e, xmn -<span class="st"> </span>e, xmn -<span class="st"> </span>e), <span class="kw">c</span>(ymn -<span class="st"> </span>e, ymn -<span class="st"> </span>e, 
+                    ymx +<span class="st"> </span>e, ymx +<span class="st"> </span>e, ymn -<span class="st"> </span>e)) &gt;<span class="st"> </span><span class="dv">0</span>)
                 }
                 ind &lt;-<span class="st"> </span>ind1
                 z.t &lt;-<span class="st"> </span>v.t[ind]
