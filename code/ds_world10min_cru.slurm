@@ -9,4 +9,4 @@
 #SBATCH -p main
 
 #### $1 should be passed as i=10, 11 or 12 for CRU, recommended optional $2 as month.index=1:12 to parallelize by months
-Rscript /workspace/UA/mfleonawicz/leonawicz/projects/Downscaling/code/ds_world10min.R $1 $2
+Rscript /workspace/UA/mfleonawicz/projects/Downscaling/code/ds_world10min.R $1 $2

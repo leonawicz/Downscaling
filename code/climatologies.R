@@ -4,14 +4,14 @@
 
 #### Script author:  Matthew Leonawicz ####
 #### Maintainted by: Matthew Leonawicz ####
-#### Last updated:   03/05/2015        ####
+#### Last updated:   09/24/2015        ####
 
 # @knitr clim
 library(raster)
 library(parallel)
 
 # Source functions
-path.fun <- file.path("/workspace/UA/mfleonawicz/leonawicz/projects/Downscaling/code")
+path.fun <- file.path("/workspace/UA/mfleonawicz/projects/Downscaling/code")
 source(file.path(path.fun,"climPrep.R"))
 source(file.path(path.fun,"climCalc.R"))
 
