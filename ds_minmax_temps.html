@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+padding-top: 50px;
+padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar) */
+.section h2 {
+padding-top: 55px;
+margin-top: -55px;
+}
+.section h3 {
+padding-top: 55px;
+margin-top: -55px;
+}
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+color: black;
+}
+/* some padding for disqus */
+#disqus_thread {
+margin-top: 45px;
+}
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46129458-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Downscaling</a>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Overview</a></li>
+
+          <li class="dropdown">
+            <a href="climatologies" class="dropdown-toggle" data-toggle="dropdown">Climatologies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="climatologies.html">climatologies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="climPrep.html">climPrep.R</a></li>
+              <li><a href="climCalc.html">climCalc.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">CRU 2.0</li>
+              <li><a href="cru20prelimExtraction">cru20prelimExtraction.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="anomalies" class="dropdown-toggle" data-toggle="dropdown">Anomalies <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Main script</li>
+              <li><a href="anomalies.html">anomalies.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Functions</li>
+              <li><a href="anomPrep.html">anomPrep.R</a></li>
+              <li><a href="anomCalc.html">anomCalc.R</a></li>
+              <li><a href="anomCalcAsScript.html">anomCalcAsScript.R</a></li>
+              <li><a href="anomParSubFunc.html">anomParSubFunc.R</a></li>
+            </ul>
+
+          <li class="dropdown">
+            <a href="downscaling" class="dropdown-toggle" data-toggle="dropdown">Downscaling <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">2-km/771-m PRISM</li>
+              <li><a href="ds_prism.html">ds_prism.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">10-minute CRU 2.0</li>
+              <li><a href="ds_world10min.html">ds_world10min.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Min & Max Temperature</li>
+              <li><a href="ds_minmax_temps.html">ds_minmax_temps.R</a></li>
+            </ul>
+
+          <li><a href="http://leonawicz.github.io">All Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="btn btn-link" href="https://github.com/leonawicz/Downscaling">
+            <i class="fa fa-github fa-lg"></i>
+            Github
+          </a>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+<div id="section-1" class="section level2">
+<h2></h2>
+</div>
+<div id="downscaling-minimum-mean-and-maximum-temperatures" class="section level2">
+<h2>Downscaling minimum, mean and maximum temperatures</h2>
+<div id="independent-application-of-the-delta-method.-what-can-go-wrong" class="section level3">
+<h3>Independent application of the delta method. What can go wrong?</h3>
+<p>When downscaling monthly averages of global climate model minimum, mean and maximum temperature outputs to a high-resolution climatology it is possible for the downscaled outputs to lose the property of monotonically increasing minimum to mean to maximum temperatures. This is a serious violation of the support of the multivariate temperature distribution. While this is not guaranteed to happen, it is also not prohibited from happening when using the univariate delta downscaling.</p>
+<div class="figure">
+<img src="mapfreq_plot.png" alt="A spatially explicit view of the proportion of years in a 95-year projected period during which downscaled minimum temperatures exceed mean temperatures for a particularly problematic combination of GCM and PRISM climatologies. In many locations the violation occurs every year." />
+<p class="caption"><em>A spatially explicit view of the proportion of years in a 95-year projected period during which downscaled minimum temperatures exceed mean temperatures for a particularly problematic combination of GCM and PRISM climatologies. In many locations the violation occurs every year.</em></p>
+</div>
+</div>
+</div>
+<div id="section-2" class="section level2">
+<h2></h2>
+<p>For clarity, note that when I refer to minimum, mean and maximum temperatures, this is shorthand for the monthly means of the daily minimum, mean and maximum temperatures, respectively.</p>
+<p>Other methods might be more robust to this violation in cases where it would happen with the delta method, but if another downscaling method is also univariate and applied independently to the variables, at a minimum it is not readily clear how or why the same issue would be prohibited from happening.</p>
+<p>This method can be applied separately and independently to each of these three ordered temperature variables. Intuitively, it is easy to understand that, for example, when downscaling mean monthly minimum temperature, the procedure has no awareness that there is another downscaled data set of mean temperatures which it cannot exceed. Similarly, when downscaling maximum temperature, nothing stops a downscaled value from dipping below the mean, or even the minimum.</p>
+<p>Values of the three variables may go out of order for a given grid cell and time point. This can occur due to differences between a GCM and a chosen climatology data set in terms of the intra-day temperature variability on which their respective monthly averages are based.</p>
+<p>A GCM might reveal a relatively large gap between minimum and maximum temperature in a region. This gap may shrink over time as the minimum temperature increases with time more than the maximum increases. This difference in deltas between two time points is of course restricted in the GCM to how much separation were initially between the minimum and maximum. However, high-resolution minimum and maximum temperature climatology data sets utilized for downscaling these variables may not accommodate such a gap.</p>
+<div class="figure">
+<img src="qcplot.png" alt="Gaps between minimum, mean and maximum temperatures are shown (vertically) as difference maps. Each row shows how when interpolated anomalies are added to the high-resolution PRISM climatologies, the differences in anomalies may combine with the differences in PRISM climatologies to allow for regions of out of order temperature statistics. Red highlights anything positive and blue negative. Note that negative values are fine in the middle column because, for example, a minimum temperature anomaly may be greater than a maximum temperature anomaly. However, the differences in downscaled outputs shown in the third column should be all non-negative, like they are in the first column." />
+<p class="caption"><em>Gaps between minimum, mean and maximum temperatures are shown (vertically) as difference maps. Each row shows how when interpolated anomalies are added to the high-resolution PRISM climatologies, the differences in anomalies may combine with the differences in PRISM climatologies to allow for regions of out of order temperature statistics. Red highlights anything positive and blue negative. Note that negative values are fine in the middle column because, for example, a minimum temperature anomaly may be greater than a maximum temperature anomaly. However, the differences in downscaled outputs shown in the third column should be all non-negative, like they are in the first column.</em></p>
+</div>
+</div>
+<div id="section-3" class="section level2">
+<h2></h2>
+<p>As an example, say a GCM minimum temperature climatology is 2 degrees C in a given area and the maximum temperature climatology is 8 degrees. At some point in the future, both variables have increased in temperature over time, but by different amounts. The minimum temperature has gone up more in the future than maximum temperature, which is not unusual. The values have increased from 2 and 8 to 9 and 12, respectively.</p>
+<p>That gives us anomalies, or deltas, of 7 degrees for minimum temperature and 4 degrees for maximum temperature. These values are added onto new minimum and maximum temperature climatologies during the downscaling process. However, the minimum and maximum temperature climatology values in this area, instead of being 2 and 8 degrees C like in the original GCM climatology, are 3 and 5 degrees C. When the anomalies of 7 and 4 are added to these values, the resulting downscaled minimum and maximum temperatures are now 10 and 9 degrees C, respectively.</p>
+<div class="figure">
+<img src="example_ts1.png" alt="Time series of downscaled outputs for a grid cell where at least one violation occurs every year." />
+<p class="caption"><em>Time series of downscaled outputs for a grid cell where at least one violation occurs every year.</em></p>
+</div>
+</div>
+<div id="section-4" class="section level2">
+<h2></h2>
+</div>
+<div id="section-5" class="section level2">
+<h2></h2>
+<div id="conditional-delta-downscaling" class="section level3">
+<h3>Conditional delta downscaling</h3>
+<p>This is an inherent limitation of the univariate deltas method. It may not occur at all when downscaling multiple ordered variables, but with the right combination of climate model output and choice of climatology, this is an expected outcome. Clearly, order statistics which do not behave and which may change their ordering do not belong in this universe. Something must be done to maintain a valid support for the multivariate temperature distribution.</p>
+<p>The violation of the requirement that the minimum, mean, and maximum be in proper ascending order may occur when attempting to downscale these three climate variables to three different climatologies. While the original GCM variables and the high-resolution climatologies multivariate each have a valid support for their multivariate temperature distribution, the GCM and the data set to which it is being downscaled may be sufficiently different from each other to invalidate the new support.</p>
+<p>Instead of independently downscaling all three variables the the three high-resolution climatologies, a chain method for delta downscaling is used. First, mean temperature is downscaled to the high-resolution mean temperature climatology. Second, minimum and maximum temperatures are downscaled with respect to the previously downscaled mean temperature.</p>
+<p>This reduces the dimensionality of the problem. It can be viewed as removing degrees of freedom. However you wish to look at it, the key change is making the downscaling of these three ordered variables dependent on one high-resolution climatology rather than three. Downscaling is no longer done independently for the three temperature data sets. The GCM mean temperature outputs are downscaled to a mean temperature climatology. In our case we use the PRISM mean temperature climatology for Alaska and western Canada. The GCM minimum and maximum temperatures are transformed into new random variables, which are functions of mean temperature and are then each downscaled conditional on the downscaled mean temperature data.</p>
+<p>GCM mean temperature is downscaled to the PRISM 1961-1990 mean temperature climatology using the delta method without any changes. The general algorithm for conditional delta downscaling, the second round of downscaling in the chain method, is as follows:</p>
+<ol style="list-style-type: decimal">
+<li><em>Using the raw GCM data, for each grid cell and time point compute the random variables X = minimum temperature - mean temperature and Y = maximum temperature - mean temperature.</em></li>
+</ol>
+<p>If you imagine the GCM data as stacks of temperature maps through time, we now have two stacks of temperature difference maps, or “gap maps” through time. These are our anomalies, or deltas. The difference from the usual delta downscaling is that this application of conditional delta downscaling the deltas map layer for a given time slice contains deltas with respect to mean temperature at that same time slice rather than deltas with respect to the same variable (minimum or maximum temperature) from a different time slice (or rather, a climatology). We are working with the deviations above and below the mean temperature defining the maximum and minimum temperatures.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p><em>Interpolate the deltas to our 2-km PRISM resolution, as would normally be done with delta layers in delta downscaling.</em></p></li>
+<li><p><em>Add the temperature delta map layers X and Y onto downscaled mean temperature instead of onto minimum and maximum temperature PRISM climatologies; these climatologies are not used.</em></p></li>
+</ol>
+<p>This essentially is delta downscaling, only reframed in a perspective that accounts for the relationship of minimum and maximum temperatures to mean temperature - or rather, the relationship of the mean to the minimum and maximum since in climate model outputs the mean may have been derived secondarily, estimated as the midrange of the minimum and maximum temperature outputs.</p>
+<div class="figure">
+<img src="example_maps.png" alt="Performing delta downscaling using the chain method, with conditional delta downscaling of minimum and maximum temperature-defining deviations from the mean being downscaled to the initially downscaled mean temperature. This yields a multivariate temperature distribution with a valid support, where the minimum, mean and maximum temperatures are properly ordered." />
+<p class="caption"><em>Performing delta downscaling using the chain method, with conditional delta downscaling of minimum and maximum temperature-defining deviations from the mean being downscaled to the initially downscaled mean temperature. This yields a multivariate temperature distribution with a valid support, where the minimum, mean and maximum temperatures are properly ordered.</em></p>
+</div>
+</div>
+</div>
+<div id="section-6" class="section level2">
+<h2></h2>
+<p>Here is a comparison of the methods using the time series for a given grid cell.</p>
+<div class="figure">
+<img src="example_ts2.png" alt="When the ordered temperature variables are downscaled to the respective PRISM climatologies, order is not preserved. Order is preserved with conditional delta downscaling because the relationships of minimum and maximum temperature to mean temperature in the raw GCM data are maintained via the dependency chain." />
+<p class="caption"><em>When the ordered temperature variables are downscaled to the respective PRISM climatologies, order is not preserved. Order is preserved with conditional delta downscaling because the relationships of minimum and maximum temperature to mean temperature in the raw GCM data are maintained via the dependency chain.</em></p>
+</div>
+</div>
+<div id="section-7" class="section level2">
+<h2></h2>
+</div>
+<div id="section-8" class="section level2">
+<h2></h2>
+<div id="some-points-to-note-about-this-approach" class="section level3">
+<h3>Some points to note about this approach</h3>
+<ul>
+<li>Conditional delta downscaling of minimum and maximum temperature on downscaled mean temperature <em>directly addresses the order statistics violation</em> where monotonically increasing minimum, mean and maximum temperatures are required, <em>given that proper order is observed in the raw GCM data</em>.</li>
+<li>Procedurally, the conditional delta downscaling method is a <em>clear analog</em> to the initial, usual delta downscaling method.</li>
+<li>This method <em>leaves minimum temperature alone</em>, allowing it to be downscaled in the standard manner.</li>
+<li>The downscaled outputs <em>retain information about separation of minimum and maximum from mean</em> in both time and space that was present in the raw GCM inputs.</li>
+<li><em>No complex statistical model is required</em> to be coupled the delta method to address the multivariate support violation. The same basic delta method concepts are applied as a chain method; only the reference used to describe the deltas changes - mean temperature with respect to the PRISM climatology and then minimum and maximum temperatures with respect to mean temperature.</li>
+<li>Unlike direct downscaling to PRISM where independent application of the delta method to all three variables was at the root of the problem, <em>minimum and maximum temperature can be treated independently</em> because it is actually their differences from the mean which are downscaled. These transformed random variables are both functions of mean temperature and are both downscaled to the same 2-km mean temperature data set.</li>
+<li>It would not be sufficient to downscaled minimum and maximum GCM temperatures to PRISM minimum and maximum temperature climatologies and then define downscaled mean temperature as the midpoint of the other two downscaled data sets. This merely reduces the number of independently downscaled ordered temperature variables to unique PRISM temperature climatologies from three to two. While this would force the mean to always be between the minimum and the maximum, the order statistics violations remain present in the outputs; minimum and maximum temperatures may still reverse order.</li>
+</ul>
+</div>
+</div>
+<div id="section-9" class="section level2">
+<h2></h2>
+</div>
+<div id="section-10" class="section level2">
+<h2></h2>
+<div id="r-code-for-conditional-delta-downscaling" class="section level3">
+<h3>R code for conditional delta downscaling</h3>
+<div id="setup" class="section level4">
+<h4>Setup</h4>
+<p>This is not all necessary, but it may be more convenient to run in non-interactive mode via <code>Rscript</code>. We load required packages and set up some input and output directories.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (<span class="kw">interactive</span>()) {
+    gcm &lt;-<span class="st"> &quot;IPSL-CM5A-LR&quot;</span>
+    rcp &lt;-<span class="st"> &quot;rcp85&quot;</span>
+} else {
+    comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
+    if (<span class="kw">length</span>(comargs)) 
+        for (z in <span class="dv">1</span>:<span class="kw">length</span>(comargs)) <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> comargs[[z]]))
+    if (!<span class="kw">exists</span>(<span class="st">&quot;rcp&quot;</span>) |<span class="st"> </span>!<span class="kw">exists</span>(<span class="st">&quot;gcm&quot;</span>)) 
+        <span class="kw">stop</span>(<span class="st">&quot;Must provide valid &#39;rcp&#39; and &#39;gcm&#39; args.&quot;</span>)
+}
+
+<span class="kw">library</span>(parallel)
+<span class="kw">library</span>(rgdal)
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(purrr)
+
+<span class="kw">setwd</span>(<span class="st">&quot;/workspace/Shared/Tech_Projects/EPSCoR_Southcentral/project_data&quot;</span>)
+rawDir &lt;-<span class="st"> &quot;cmip5/prepped&quot;</span>
+dsDir &lt;-<span class="st"> &quot;downscaled&quot;</span>
+vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tasmin&quot;</span>, <span class="st">&quot;tas&quot;</span>, <span class="st">&quot;tasmax&quot;</span>)
+<span class="kw">dir.create</span>(outDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;/atlas_scratch/mfleonawicz/tas_minmax_ds&quot;</span>, gcm, 
+    rcp), <span class="dt">recur =</span> T, <span class="dt">showWarnings =</span> F)
+<span class="kw">walk</span>(vars[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)], ~<span class="kw">dir.create</span>(<span class="kw">file.path</span>(outDir, .x), <span class="dt">showWarnings =</span> F))</code></pre></div>
+</div>
+<div id="functions" class="section level4">
+<h4>Functions</h4>
+<p>There are only a few functions here and they are all very simple. <code>devFromMean</code> uses the <code>raster</code> package to interface with netcdf, reading the minimum, mean and maximum temperature files into bricks for a given RCP and GCM. It returns a list of the two desired bricks of deltas.</p>
+<p><code>fortify</code> prepares raw GCM raster layers for projection to the higher-resolution grid. This may not be necessary depending on the GCM data. <code>dsFiles</code> simply returns a list of files names for the corresponding downscaled mean temperature single-layer geotiff outputs. In my case the files need some reordering to line up with the chronological raw GCM brick layers due to a silly file naming convention, so that part can possibly be ignored as well.</p>
+<p>Finally, <code>writeMinMax</code> is the function which performs the basic delta arithmetic operations and writes conditionally downscaled minimum and maximum temperature map layer geotiffs to disk.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devFromMean &lt;-<span class="st"> </span>function(rcp, gcm) {
+    x &lt;-<span class="st"> </span><span class="kw">map</span>(vars, ~<span class="kw">readAll</span>(<span class="kw">brick</span>(<span class="kw">list.files</span>(<span class="kw">file.path</span>(rawDir, gcm, rcp, .x), 
+        <span class="dt">full =</span> T), <span class="dt">varname =</span> .x)))
+    <span class="kw">list</span>(<span class="dt">lwr =</span> x[[<span class="dv">1</span>]] -<span class="st"> </span>x[[<span class="dv">2</span>]], <span class="dt">upr =</span> x[[<span class="dv">3</span>]] -<span class="st"> </span>x[[<span class="dv">2</span>]])
+}
+
+fortify &lt;-<span class="st"> </span>function(x) {
+    r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="kw">extent</span>(<span class="dv">0</span>, <span class="dv">360</span>, -<span class="dv">90</span>, <span class="dv">90</span>), <span class="dt">nrow =</span> <span class="kw">nrow</span>(x), <span class="dt">ncol =</span> <span class="kw">ncol</span>(x), <span class="dt">crs =</span> <span class="kw">projection</span>(x))
+    <span class="kw">round</span>(<span class="kw">rotate</span>(<span class="kw">resample</span>(x, r)), <span class="dv">1</span>)
+}
+
+dsFiles &lt;-<span class="st"> </span>function(rcp, gcm) {
+    v &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">file.path</span>(dsDir, gcm, rcp, vars[<span class="dv">2</span>]), <span class="dt">full =</span> T)
+    yrs &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">substr</span>(<span class="kw">map_chr</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(v), <span class="st">&quot;_&quot;</span>), <span class="dv">8</span>), <span class="dv">1</span>, <span class="dv">4</span>))
+    v &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">unlist</span>(<span class="kw">split</span>(v, yrs)))
+    <span class="kw">list</span>(<span class="kw">gsub</span>(vars[<span class="dv">2</span>], vars[<span class="dv">1</span>], v), v, <span class="kw">gsub</span>(vars[<span class="dv">2</span>], vars[<span class="dv">3</span>], v)) %&gt;%<span class="st"> </span><span class="kw">setNames</span>(vars)
+}
+
+writeMinMax &lt;-<span class="st"> </span>function(i, x, y, dir) {
+    r &lt;-<span class="st"> </span><span class="kw">readAll</span>(<span class="kw">raster</span>(y$tas[i]))
+    rmin &lt;-<span class="st"> </span><span class="kw">round</span>(r +<span class="st"> </span><span class="kw">projectRaster</span>(<span class="kw">subset</span>(x$lwr, i), r), <span class="dv">1</span>)
+    rmax &lt;-<span class="st"> </span><span class="kw">round</span>(r +<span class="st"> </span><span class="kw">projectRaster</span>(<span class="kw">subset</span>(x$upr, i), r), <span class="dv">1</span>)
+    <span class="kw">walk2</span>(<span class="kw">list</span>(rmin, rmax), vars[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)], ~<span class="kw">writeRaster</span>(.x, <span class="kw">file.path</span>(outDir, 
+        .y, <span class="kw">basename</span>(y[[.y]][i])), <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T))
+}</code></pre></div>
+</div>
+<div id="downscale" class="section level4">
+<h4>Downscale</h4>
+<p>Compute raw GCM deviations from mean and list corresponding downscaled mean files. Pass both to <code>writeMinMax</code> and run in parallel across time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">deltas &lt;-<span class="st"> </span><span class="kw">devFromMean</span>(rcp, gcm) %&gt;%<span class="st"> </span><span class="kw">map</span>(~<span class="kw">fortify</span>(.x))
+files &lt;-<span class="st"> </span><span class="kw">dsFiles</span>(rcp, gcm)
+<span class="kw">mclapply</span>(<span class="kw">seq_along</span>(files$tas), writeMinMax, deltas, files, <span class="dt">mc.cores =</span> <span class="dv">32</span>)</code></pre></div>
+</div>
+</div>
+</div>
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+<script>
+  // manage active state of menu based on current page
+  $(document).ready(function () {
+  
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+    
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+	  
+  });
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
