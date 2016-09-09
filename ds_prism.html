@@ -10,14 +10,15 @@
 
 
 
+
 <title></title>
 
-<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="libs/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
-<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
-<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
-<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<link href="libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -41,30 +42,56 @@ color: black;
 #disqus_thread {
 margin-top: 45px;
 }
+p {
+  text-align: justify;
+}
+img.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
 <link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
 td.sourceCode { padding-left: 5px; }
 pre, code { color: #cccccc; background-color: #303030; }
-code > span.kw { color: #f0dfaf; }
-code > span.dt { color: #dfdfbf; }
-code > span.dv { color: #dcdccc; }
-code > span.bn { color: #dca3a3; }
-code > span.fl { color: #c0bed1; }
-code > span.ch { color: #dca3a3; }
-code > span.st { color: #cc9393; }
-code > span.co { color: #7f9f7f; }
-code > span.ot { color: #efef8f; }
-code > span.al { color: #ffcfaf; }
-code > span.fu { color: #efef8f; }
-code > span.er { color: #c3bf9f; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 </style>
 <style type="text/css">
   pre:not([class]) {
@@ -72,6 +99,33 @@ code > span.er { color: #c3bf9f; }
   }
 </style>
 
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
 
 
 <script>
@@ -100,12 +154,34 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
 
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -156,6 +232,9 @@ img {
               <li class="divider"></li>
               <li class="dropdown-header">10-minute CRU 2.0</li>
               <li><a href="ds_world10min.html">ds_world10min.R</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-header">Min & Max Temperature</li>
+              <li><a href="ds_minmax_temps.html">ds_minmax_temps.R</a></li>
             </ul>
 
           <li><a href="http://leonawicz.github.io">All Projects</a></li>
@@ -170,6 +249,12 @@ img {
     </div>
   </div>
 
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
 
 
 <div id="section" class="section level2">
@@ -190,7 +275,7 @@ img {
 <h3>R code</h3>
 <div id="setup" class="section level4">
 <h4>Setup</h4>
-<pre class="sourceCode r"><code class="sourceCode r">comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comargs &lt;-<span class="st"> </span>(<span class="kw">commandArgs</span>(<span class="ot">TRUE</span>))
 if (!<span class="kw">length</span>(comargs)) <span class="kw">q</span>(<span class="st">&quot;no&quot;</span>) else for (z in <span class="dv">1</span>:<span class="kw">length</span>(comargs)) <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text =</span> comargs[[z]]))
 
 if (!<span class="kw">exists</span>(<span class="st">&quot;i&quot;</span>)) <span class="kw">stop</span>(<span class="st">&quot;Index variable &#39;i&#39; not passed at command line.&quot;</span>)
@@ -232,11 +317,11 @@ period.scenario &lt;-<span class="st"> </span>if (scenario ==<span class="st"> &
 <span class="co"># period.scenario &lt;- if(scenario==&#39;historical&#39;) c(file.path(scenario,</span>
 <span class="co"># &#39;singleBand&#39;), &#39;&#39;) else c(&#39;projected&#39;, scenario)</span>
 models &lt;-<span class="st"> </span><span class="kw">list.files</span>(anomDir[i])
-models &lt;-<span class="st"> </span>models[models %in%<span class="st"> </span>allowed.models]</code></pre>
+models &lt;-<span class="st"> </span>models[models %in%<span class="st"> </span>allowed.models]</code></pre></div>
 </div>
 <div id="support-function" class="section level4">
 <h4>Support function</h4>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Support function for method=&#39;akima&#39;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Support function for method=&#39;akima&#39;</span>
 trim2 &lt;-<span class="st"> </span>function(x, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">out =</span> <span class="st">&quot;matrix&quot;</span>, <span class="dt">rc.ind =</span> F, <span class="dt">xy.ext =</span> F) {
     if (!<span class="kw">any</span>(out ==<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;raster&quot;</span>))) 
         <span class="kw">stop</span>(<span class="st">&quot;output must be a matrix or raster&quot;</span>)
@@ -283,11 +368,11 @@ trim2 &lt;-<span class="st"> </span>function(x, <span class="dt">y =</span> <spa
         }
     }
     <span class="kw">return</span>(x)
-}</code></pre>
+}</code></pre></div>
 </div>
 <div id="processing-function" class="section level4">
 <h4>Processing function</h4>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Processing function</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Processing function</span>
 f &lt;-<span class="st"> </span>function(j, i, <span class="dt">par.by.month =</span> <span class="ot">FALSE</span>, anomDir, outDir, b.clim.t, b.clim.p, 
     <span class="dt">method =</span> <span class="st">&quot;akima&quot;</span>) {
     if (par.by.month) {
@@ -493,18 +578,18 @@ f &lt;-<span class="st"> </span>function(j, i, <span class="dt">par.by.month =</
         
     }
     <span class="kw">return</span>()
-}</code></pre>
+}</code></pre></div>
 </div>
 <div id="run-downscaling" class="section level4">
 <h4>Run downscaling</h4>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run</span>
 if (<span class="kw">exists</span>(<span class="st">&quot;month.index&quot;</span>) &amp;&amp;<span class="st"> </span><span class="kw">all</span>(<span class="dv">1</span>:<span class="dv">12</span> %in%<span class="st"> </span>month.index)) {
     <span class="kw">mclapply</span>(month.index, f, <span class="dt">i =</span> i, <span class="dt">par.by.month =</span> <span class="ot">TRUE</span>, <span class="dt">anomDir =</span> anomDir, 
         <span class="dt">outDir =</span> outDir, <span class="dt">b.clim.t =</span> b.clim.t, <span class="dt">b.clim.p =</span> b.clim.p, <span class="dt">method =</span> <span class="st">&quot;akima&quot;</span>, 
         <span class="dt">mc.cores =</span> <span class="kw">length</span>(month.index))
 } else <span class="kw">mclapply</span>(<span class="dv">1</span>:<span class="kw">length</span>(models), f, <span class="dt">i =</span> i, <span class="dt">anomDir =</span> anomDir, <span class="dt">outDir =</span> outDir, 
     <span class="dt">b.clim.t =</span> b.clim.t, <span class="dt">b.clim.p =</span> b.clim.p, <span class="dt">method =</span> <span class="st">&quot;akima&quot;</span>, <span class="dt">mc.cores =</span> <span class="kw">min</span>(<span class="kw">length</span>(models), 
-        <span class="dv">32</span>))</code></pre>
+        <span class="dv">32</span>))</code></pre></div>
 </div>
 </div>
 </div>
@@ -530,6 +615,8 @@ if (<span class="kw">exists</span>(<span class="st">&quot;month.index&quot;</spa
 	  
   });
 </script>
+
+
 
 </div>
 
