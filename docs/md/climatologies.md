@@ -24,7 +24,7 @@ library(raster)
 library(parallel)
 
 # Source functions
-path.fun <- file.path("/workspace/UA/mfleonawicz/leonawicz/projects/Downscaling/code")
+path.fun <- file.path("/workspace/UA/mfleonawicz/projects/Downscaling/code")
 source(file.path(path.fun, "climPrep.R"))
 source(file.path(path.fun, "climCalc.R"))
 
