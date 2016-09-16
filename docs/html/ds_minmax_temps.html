@@ -303,22 +303,22 @@ $(document).ready(function () {
 <div id="conditional-delta-downscaling" class="section level3">
 <h3>Conditional delta downscaling</h3>
 <p>This is an inherent limitation of the univariate deltas method. It may not occur at all when downscaling multiple ordered variables, but with the right combination of climate model output and choice of climatology, this is an expected outcome. Clearly, order statistics which do not behave and which may change their ordering do not belong in this universe. Something must be done to maintain a valid support for the multivariate temperature distribution.</p>
-<p>The violation of the requirement that the minimum, mean, and maximum be in proper ascending order may occur when attempting to downscale these three climate variables to three different climatologies. While the original GCM variables and the high-resolution climatologies multivariate each have a valid support for their multivariate temperature distribution, the GCM and the data set to which it is being downscaled may be sufficiently different from each other to invalidate the new support.</p>
+<p>The violation of the requirement that the minimum, mean, and maximum be in proper ascending order may occur when attempting to downscale these three climate variables to three different climatologies. While the original GCM variables and the high-resolution climatologies each have a valid support for their multivariate temperature distribution, the GCM and the data set to which it is being downscaled may be sufficiently different from each other to invalidate the new support.</p>
 <p>Instead of independently downscaling all three variables the the three high-resolution climatologies, a chain method for delta downscaling is used. First, mean temperature is downscaled to the high-resolution mean temperature climatology. Second, minimum and maximum temperatures are downscaled with respect to the previously downscaled mean temperature.</p>
 <p>This reduces the dimensionality of the problem. It can be viewed as removing degrees of freedom. However you wish to look at it, the key change is making the downscaling of these three ordered variables dependent on one high-resolution climatology rather than three. Downscaling is no longer done independently for the three temperature data sets. The GCM mean temperature outputs are downscaled to a mean temperature climatology. In our case we use the PRISM mean temperature climatology for Alaska and western Canada. The GCM minimum and maximum temperatures are transformed into new random variables, which are functions of mean temperature and are then each downscaled conditional on the downscaled mean temperature data.</p>
 <p>GCM mean temperature is downscaled to the PRISM 1961-1990 mean temperature climatology using the delta method without any changes. The general algorithm for conditional delta downscaling, the second round of downscaling in the chain method, is as follows:</p>
 <ol style="list-style-type: decimal">
 <li><em>Using the raw GCM data, for each grid cell and time point compute the random variables X = minimum temperature - mean temperature and Y = maximum temperature - mean temperature.</em></li>
 </ol>
-<p>If you imagine the GCM data as stacks of temperature maps through time, we now have two stacks of temperature difference maps, or “gap maps” through time. These are our anomalies, or deltas. The difference from the usual delta downscaling is that this application of conditional delta downscaling the deltas map layer for a given time slice contains deltas with respect to mean temperature at that same time slice rather than deltas with respect to the same variable (minimum or maximum temperature) from a different time slice (or rather, a climatology). We are working with the deviations above and below the mean temperature defining the maximum and minimum temperatures.</p>
+<p>If you imagine the GCM data as stacks of temperature maps through time, we now have two stacks of temperature difference maps, or “gap maps” through time. These are our anomalies, or deltas. The difference from the usual delta downscaling method is that in this application of conditional delta downscaling the deltas map layer for a given time slice contains deltas with respect to mean temperature at that same time slice rather than deltas with respect to the same variable (minimum or maximum temperature) from a different time slice (or rather, a climatology). We are working with the deviations above and below the mean temperature defining the maximum and minimum temperatures.</p>
 <ol start="2" style="list-style-type: decimal">
 <li><p><em>Interpolate the deltas to our 2-km PRISM resolution, as would normally be done with delta layers in delta downscaling.</em></p></li>
 <li><p><em>Add the temperature delta map layers X and Y onto downscaled mean temperature instead of onto minimum and maximum temperature PRISM climatologies; these climatologies are not used.</em></p></li>
 </ol>
 <p>This essentially is delta downscaling, only reframed in a perspective that accounts for the relationship of minimum and maximum temperatures to mean temperature - or rather, the relationship of the mean to the minimum and maximum since in climate model outputs the mean may have been derived secondarily, estimated as the midrange of the minimum and maximum temperature outputs.</p>
 <div class="figure">
-<img src="example_maps.png" alt="Performing delta downscaling using the chain method, with conditional delta downscaling of minimum and maximum temperature-defining deviations from the mean being downscaled to the initially downscaled mean temperature. This yields a multivariate temperature distribution with a valid support, where the minimum, mean and maximum temperatures are properly ordered." />
-<p class="caption"><em>Performing delta downscaling using the chain method, with conditional delta downscaling of minimum and maximum temperature-defining deviations from the mean being downscaled to the initially downscaled mean temperature. This yields a multivariate temperature distribution with a valid support, where the minimum, mean and maximum temperatures are properly ordered.</em></p>
+<img src="example_maps.png" alt="Performing delta downscaling using the chain method, with conditional delta downscaling of minimum and maximum temperature-defining deviations from the mean being downscaled to the initially downscaled mean temperature. This yields a multivariate temperature distribution with a valid support where the minimum, mean and maximum temperatures are properly ordered." />
+<p class="caption"><em>Performing delta downscaling using the chain method, with conditional delta downscaling of minimum and maximum temperature-defining deviations from the mean being downscaled to the initially downscaled mean temperature. This yields a multivariate temperature distribution with a valid support where the minimum, mean and maximum temperatures are properly ordered.</em></p>
 </div>
 </div>
 </div>
@@ -340,7 +340,7 @@ $(document).ready(function () {
 <ul>
 <li>Conditional delta downscaling of minimum and maximum temperature on downscaled mean temperature <em>directly addresses the order statistics violation</em> where monotonically increasing minimum, mean and maximum temperatures are required, <em>given that proper order is observed in the raw GCM data</em>.</li>
 <li>Procedurally, the conditional delta downscaling method is a <em>clear analog</em> to the initial, usual delta downscaling method.</li>
-<li>This method <em>leaves minimum temperature alone</em>, allowing it to be downscaled in the standard manner.</li>
+<li>This method <em>leaves mean temperature alone</em>, allowing it to be downscaled in the standard manner.</li>
 <li>The downscaled outputs <em>retain information about separation of minimum and maximum from mean</em> in both time and space that was present in the raw GCM inputs.</li>
 <li><em>No complex statistical model is required</em> to be coupled the delta method to address the multivariate support violation. The same basic delta method concepts are applied as a chain method; only the reference used to describe the deltas changes - mean temperature with respect to the PRISM climatology and then minimum and maximum temperatures with respect to mean temperature.</li>
 <li>Unlike direct downscaling to PRISM where independent application of the delta method to all three variables was at the root of the problem, <em>minimum and maximum temperature can be treated independently</em> because it is actually their differences from the mean which are downscaled. These transformed random variables are both functions of mean temperature and are both downscaled to the same 2-km mean temperature data set.</li>
@@ -373,6 +373,7 @@ $(document).ready(function () {
 <span class="kw">library</span>(rgdal)
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(purrr)
+<span class="kw">rasterOptions</span>(<span class="dt">chunksize =</span> <span class="fl">1e+11</span>, <span class="dt">maxmemory =</span> <span class="fl">1e+12</span>)
 
 <span class="kw">setwd</span>(<span class="st">&quot;/workspace/Shared/Tech_Projects/EPSCoR_Southcentral/project_data&quot;</span>)
 rawDir &lt;-<span class="st"> &quot;cmip5/prepped&quot;</span>
@@ -388,6 +389,8 @@ vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&q
 <p><code>fortify</code> prepares raw GCM raster layers for projection to the higher-resolution grid. This may not be necessary depending on the GCM data. <code>dsFiles</code> simply returns a list of files names for the corresponding downscaled mean temperature single-layer geotiff outputs. In my case the files need some reordering to line up with the chronological raw GCM brick layers due to a silly file naming convention, so that part can possibly be ignored as well.</p>
 <p>Finally, <code>writeMinMax</code> is the function which performs the basic delta arithmetic operations and writes conditionally downscaled minimum and maximum temperature map layer geotiffs to disk.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devFromMean &lt;-<span class="st"> </span>function(rcp, gcm) {
+    if (gcm ==<span class="st"> &quot;NCAR-CCSM4&quot;</span>) 
+        gcm &lt;-<span class="st"> &quot;CCSM4&quot;</span>  <span class="co"># temporary fix: raw files have different name</span>
     x &lt;-<span class="st"> </span><span class="kw">map</span>(vars, ~<span class="kw">readAll</span>(<span class="kw">brick</span>(<span class="kw">list.files</span>(<span class="kw">file.path</span>(rawDir, gcm, rcp, .x), 
         <span class="dt">full =</span> T), <span class="dt">varname =</span> .x)))
     <span class="kw">list</span>(<span class="dt">lwr =</span> x[[<span class="dv">1</span>]] -<span class="st"> </span>x[[<span class="dv">2</span>]], <span class="dt">upr =</span> x[[<span class="dv">3</span>]] -<span class="st"> </span>x[[<span class="dv">2</span>]])
@@ -411,6 +414,7 @@ writeMinMax &lt;-<span class="st"> </span>function(i, x, y, dir) {
     rmax &lt;-<span class="st"> </span><span class="kw">round</span>(r +<span class="st"> </span><span class="kw">projectRaster</span>(<span class="kw">subset</span>(x$upr, i), r), <span class="dv">1</span>)
     <span class="kw">walk2</span>(<span class="kw">list</span>(rmin, rmax), vars[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)], ~<span class="kw">writeRaster</span>(.x, <span class="kw">file.path</span>(outDir, 
         .y, <span class="kw">basename</span>(y[[.y]][i])), <span class="dt">datatype =</span> <span class="st">&quot;FLT4S&quot;</span>, <span class="dt">overwrite =</span> T))
+    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;File&quot;</span>, i, <span class="st">&quot;of&quot;</span>, <span class="kw">length</span>(y$tas), <span class="st">&quot;saved.&quot;</span>))
 }</code></pre></div>
 </div>
 <div id="downscale" class="section level4">
